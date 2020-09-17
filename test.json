@@ -1,0 +1,39 @@
+{
+    "token": "oCVgtlUSc75hs77OcMFXwcqE",
+    "team_id": "T01AV5ATPA8",
+    "api_app_id": "A01BCQKEKFS",
+    "event": {
+        "client_msg_id": "2c82c524-1979-48d2-a027-a29613a51db8",
+        "type": "message",
+        "text": "Testing the events api",
+        "user": "U01AP5SU5QB",
+        "ts": "1600285641.000300",
+        "team": "T01AV5ATPA8",
+        "blocks": [
+            {
+                "type": "rich_text",
+                "block_id": "Ouh",
+                "elements": [
+                    {
+                        "type": "rich_text_section",
+                        "elements": [
+                            {
+                                "type": "text",
+                                "text": "Testing the events api"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "channel": "C01BCQGKR5E",
+        "event_ts": "1600285641.000300",
+        "channel_type": "channel"
+    },
+    "type": "event_callback",
+    "event_id": "Ev01AMJETER4",
+    "event_time": 1600285641,
+    "authed_users": [
+        "U01AP5SU5QB"
+    ]
+}

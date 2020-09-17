@@ -1,2 +1,4 @@
 .env
 Pipfile
+data
+__pycache__/
