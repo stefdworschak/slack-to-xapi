@@ -20,22 +20,22 @@ Main system requirements:
 
 | Slack Event Type | Slack Event SubType | Verb | Object | 
 | --- | --- | --- | --- |
-| message | message_changed | changed | message uri |
+| member_joined_channel | None | joined | channel uri |
 | member_left_channel | None | left | channel uri |
+| message | None | sent | message uri |
+| message | message_changed | changed | message uri |
 | message | message_deleted | deleted | message uri |
+| message | file_share | shared | file uri |
+| pin_added | None | pinned | message/file uri |
 | pin_removed | None | unpinned | message/file uri |
+| reaction_added | None | reacted to | message/file uri |
+| reaction_removed | None | removed reaction to | message/file uri |
 | star_added | None | starred | message uri |
 | file_change | None | changed | file uri |
 | file_deleted | None | deleled | file uri |
-| pin_added | None | pinned | message/file uri |
 | file_created | None | created | file uri |
-| message | file_share | shared | file uri |
 | file_public | None | made public | file uri |
-| member_joined_channel | None | joined | channel uri |
 | file_shared | None | shared | file uri |
-| reaction_added | None | reacted to | message/file uri |
-| reaction_removed | None | removed reaction to | message/file uri |
-| message | None | sent | message uri |
 
 ### Special types: 
 | Slack Event Type | Slack Event SubType | Verb | Object | Extra Slack Event Attr |
