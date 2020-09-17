@@ -19,7 +19,7 @@ Main system requirements:
 ### Standard Types:
 
 | Slack Event Type | Slack Event SubType | Verb | Object | 
-| --- | --- | --- | --- | --- |
+| --- | --- | --- | --- |
 | message | message_changed | changed | message uri |
 | member_left_channel | None | left | channel uri |
 | message | message_deleted | deleted | message uri |
