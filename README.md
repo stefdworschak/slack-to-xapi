@@ -10,6 +10,12 @@ Main system requirements:
  - Interoperable with any xAPI conformant LRS
  - Available for any xAPI professional or enthusiast
 
+## User Stories
+
+- As a Learning Provider, I want to measure how much students engage on Slack, so that I can validate that Slack is a useful tool to support their learning and also measure the usage of Slack.
+- As a Learning Provider, I want to know in what way my students engage with Slack, so that I can gauge which methods of interaction support their learning and enforce these methods.
+- As a Learning Provider, I want to know what kind of content students share, pin, star and react to, so that I can better curate learning resources for them.
+
 ## System Architecture
 
 ![System Architecture Diagram](https://github.com/stefdworschak/slack-to-xapi/blob/master/misc/system_architecture.png?raw=true)
