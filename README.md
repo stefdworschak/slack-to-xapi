@@ -30,7 +30,8 @@ Main system requirements:
 | pin_removed | None | unpinned | message/file uri |
 | reaction_added | None | reacted to | message/file uri |
 | reaction_removed | None | removed reaction to | message/file uri |
-| star_added | None | starred | message uri |
+| star_added | None | starred | message/file uri |
+| star_removed | None | unstarred | message/file uri |
 | file_change | None | changed | file uri |
 | file_deleted | None | deleled | file uri |
 | file_created | None | created | file uri |
