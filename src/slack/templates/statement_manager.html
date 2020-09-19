@@ -1,0 +1,11 @@
+<h1>
+    Statement Manager
+</h1>
+
+<ul>
+{% for key, val in slack_event.all.items %}
+
+<li>{{key}}: {{val}}</li>
+
+{% endfor %}
+</ul>

@@ -48,3 +48,4 @@ Main system requirements:
 | Slack Event Type | Slack Event SubType | Verb | Object | Extra Slack Event Attr |
 | --- | --- | --- | --- | ---| 
 | message | None | shared | message uri | attachments != None |
+| message | None | mentioned | actor | message contains `<@userid>` |
