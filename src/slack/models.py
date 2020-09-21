@@ -29,14 +29,17 @@ class SlackEvent(models.Model):
     attachments = JSONField(null=True, blank=True)
     ts = models.DateTimeField(null=True, blank=True)
     mentioned_users = JSONField(null=True, blank=True)
+    has_mentions = models.BooleanField(default=False)
 
     _payload = JSONField(null=True, blank=True)
+
+    def __str__(self):
+        return f'@{self.user} {self.event_type} {(self.event_subtype or "")} at {self.event_time}'  # noqa: E501
 
     def save(self, *args, **kwargs):
         """ Custom save function to convert the payload to individual
         fields """
         data = json.loads(self._payload)
-        print(data)
         event_content = data.get('event', {})
 
         self.team_id = data.get('team_id')
@@ -70,8 +73,8 @@ class SlackEvent(models.Model):
         #if self.check_mentions(self.message_text):
         #    pass
         self.mentioned_users = self.get_mentions_from_message(self.message_text)
-
-        self.event_id = data.get('event_id')        
+        if self.mentioned_users:
+            self.has_mentions = True
         super(SlackEvent, self).save(*args, **kwargs)
 
     def get_attachments(self):
