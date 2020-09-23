@@ -3,7 +3,8 @@ import os
 
 from django.test import TestCase
 
-from xapi.models import Actor, Verb, SlackField
+from xapi.models import (XApiActor, XApiVerb, XApiObject, SlackVerbField,
+                         SlackObjectField)
 from slack.models import SlackEvent
 from django.contrib.auth.models import User
 
@@ -15,28 +16,41 @@ class XApiConversionUnitTest(TestCase):
     def setUp(self):
         self.user = User.objects.create(username=TEST_USERNAME,
                                         password=TEST_USER_PASSWORD)
-        self.verb = Verb(
+        self.xapi_verb = XApiVerb(
             created_by=self.user,
             iri='http://example.com/verbs/sent',
             display_name='sent',
             language='en-US'
         )
-        self.verb.save()
-        SlackField.objects.create(
+        self.xapi_verb.save()
+        self.xapi_object = XApiObject(
+            created_by=self.user,
+            iri='http://example.com/activities/message',
+            display_name="Message",
+            language="en-US"
+        )
+        self.xapi_object.save()
+        SlackVerbField.objects.create(
             created_by=self.user,
             slack_event_field='event_type',
             expected_value='message',
-            verb=self.verb
+            xapi_verb=self.xapi_verb
         )
-        SlackField.objects.create(
+        SlackVerbField.objects.create(
             created_by=self.user,
             slack_event_field='event_subtype',
             expected_value='None',
-            verb=self.verb
+            xapi_verb=self.xapi_verb
+        )
+        SlackObjectField.objects.create(
+            created_by=self.user,
+            slack_event_field='event_type',
+            expected_value='message',
+            xapi_object=self.xapi_object
         )
         
     def test_slack_id_to_xapi_actor(self):
-        a1 = Actor.objects.create(
+        a1 = XApiActor.objects.create(
             iri='actor1@example.com',
             iri_type='mbox',
             display_name='Actor 1',
@@ -53,6 +67,28 @@ class XApiConversionUnitTest(TestCase):
         
         slack_event = SlackEvent(_payload=json.dumps(slack_event_payloads[0]))
         slack_event.save()
-        xapi_verb = Verb.slack_event_to_xapi_verb(slack_event)
+        xapi_verb = XApiVerb.slack_event_to_xapi_verb(slack_event)
         self.assertTrue(isinstance(xapi_verb, dict))
-    
+
+    def test_model_to_xapi_object(self):
+        expected = {
+            "object": {
+                "id": "http://example.com/activities/message",
+                "definition": {
+                    "name": {
+                        "en-US": "Message"
+                    },
+                },
+                "objectType": "Activity"
+            }
+        }
+        self.assertEquals(self.xapi_object.model_to_xapi_object(), expected)
+
+    def test_slack_event_to_xapi_verb(self):
+        with open('data/slack_event_tests.json') as file:
+            slack_event_payloads = json.load(file)
+        
+        slack_event = SlackEvent(_payload=json.dumps(slack_event_payloads[0]))
+        slack_event.save()
+        xapi_object = XApiObject.slack_event_to_xapi_object(slack_event)
+        self.assertTrue(isinstance(xapi_object, dict))

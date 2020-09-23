@@ -7,6 +7,8 @@ from django.db import models
 from jsonfield import JSONField
 import pytz
 
+from xapi.models import XApiActor, XApiVerb, XApiObject
+
 TZ = pytz.timezone("Europe/Dublin") 
 
 class RawSlackEvent(models.Model):
@@ -99,3 +101,14 @@ class SlackEvent(models.Model):
     def get_mentions_from_message(message_text):
         regex_pattern = r'[<][@]((?:[A-Z]|[0-9])*)[>]'
         return re.findall(regex_pattern, message_text)
+
+
+    def slack_event_to_xapi_statement(self):
+        xapi_statement = {}
+        xapi_actor = XApiActor.slack_id_to_xapi_actor(self.user)
+        xapi_statement.update(xapi_actor)
+        xapi_verb = XApiVerb.slack_event_to_xapi_verb(self)
+        xapi_statement.update(xapi_verb)
+        xapi_object = XApiObject.slack_event_to_xapi_object(self)
+        xapi_statement.update(xapi_object)
+        return xapi_statement
