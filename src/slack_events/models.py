@@ -1,6 +1,7 @@
 import collections
 from datetime import datetime
 import json
+import logging
 import re
 
 from django.conf import settings
@@ -12,8 +13,10 @@ import pytz
 from slack import WebClient
 
 from xapi.models import XApiActor, XApiVerb, XApiObject
-from main.helper import get_or_none
+from xapi.models import ACTOR_IRI_TYPES
+from main.helper import get_or_none, create_sha1
 
+logger = logging.getLogger(__name__)
 TZ = pytz.timezone('Europe/Dublin')
 SLACK_USER_API = ''
 slack_client = WebClient(token=settings.SLACK_OAUTH_TOKEN)
@@ -125,6 +128,7 @@ class SlackEvent(models.Model):
         """ Check if Actor exists and try to create it by looking up the info
         from their Slack profile if feature is enabled """
         if not settings.ACTOR_CREATION_ENABLED:
+            logger.warning("Automatic actor creation not enabled")
             return
         
         existing_actor = get_or_none(XApiActor, slack_user_id=self.user_id)
@@ -133,21 +137,34 @@ class SlackEvent(models.Model):
 
         admin_user = get_or_none(User, username='admin')
         if not admin_user:
+            logger.warning("Admin user for automatic actor creation not found")
             return
 
         slack_call = slack_client.users_info(user=self.user_id)
-        if slack_call.get('ok'):
-            user_data = slack_call.get('user')
+        if not slack_call.get('ok'):
+            return
+        
+        user_data = slack_call.get('user')
+        email = user_data.get('profile', {}).get('email')
+        if not email:
+            logger.warning("No email in Slack user found")
+            return
 
-        if user_data.get('profile', {}).get('email'):
-            actor = XApiActor(
-                created_by=admin_user,
-                slack_user_id=self.user_id,
-                iri=user_data.get('profile', {}).get('email'),
-                iri_type='mbox',
-                display_name=(
-                    user_data.get('profile', {}).get('display_name')
-                    or user_data.get('real_name'))
-            )
-            actor.save()
+        if settings.ACTOR_IRI_TYPE not in [t[0] for t in ACTOR_IRI_TYPES]:
+            logger.warning("Iri type declared is invalid")
+            return
+
+        if settings.ACTOR_IRI_TYPE == 'mbox_sha1sum':
+            email = create_sha1(email)
+
+        actor = XApiActor(
+            created_by=admin_user,
+            slack_user_id=self.user_id,
+            iri=email,
+            iri_type=settings.ACTOR_IRI_TYPE,
+            display_name=(
+                user_data.get('profile', {}).get('display_name')
+                or user_data.get('real_name'))
+        )
+        actor.save()
         return get_or_none(XApiActor, slack_user_id=self.user_id)
