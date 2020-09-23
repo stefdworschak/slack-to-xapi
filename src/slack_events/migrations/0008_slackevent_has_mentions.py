@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('slack', '0007_delete_xapiconversion'),
+        ('slack_events', '0007_delete_xapiconversion'),
     ]
 
     operations = [

@@ -30,7 +30,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env('DEBUG')
+DEBUG = bool(env('DEBUG')) == True
 
 ALLOWED_HOSTS = ['*']
 
@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'slack',
+    'slack_events',
     'xapi',
 ]
 
@@ -128,3 +128,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Custom flags
+ACTOR_CREATION_ENABLED = bool(env('ACTOR_CREATION_ENABLED')) == True
+SLACK_OAUTH_TOKEN = env('SLACK_OAUTH_TOKEN')

@@ -5,7 +5,7 @@ from django.test import TestCase
 
 from xapi.models import (XApiActor, XApiVerb, XApiObject, SlackVerbField,
                          SlackObjectField)
-from slack.models import SlackEvent
+from slack_events.models import SlackEvent
 from django.contrib.auth.models import User
 
 TEST_USERNAME = 'user@example.com'

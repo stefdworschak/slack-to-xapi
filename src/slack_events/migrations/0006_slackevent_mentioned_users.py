@@ -7,7 +7,7 @@ import jsonfield.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('slack', '0005_auto_20200918_1738'),
+        ('slack_events', '0005_auto_20200918_1738'),
     ]
 
     operations = [

@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from slack.urls import urlpatterns as slack_urls
+from slack_events.urls import urlpatterns as slack_urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),

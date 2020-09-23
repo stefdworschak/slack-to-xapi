@@ -10,6 +10,7 @@ from django.contrib.auth.models import User
 
 TEST_USERNAME = 'user@example.com'
 TEST_USER_PASSWORD = 'fakepassword'
+REAL_USER_ID = 'U01AP783ZLK'
 
 
 class SlackEventUnitTest(TestCase):
@@ -84,4 +85,17 @@ class SlackEventUnitTest(TestCase):
 
         self.assertEquals(json.dumps(slack_event.slack_event_to_xapi_statement()),
                           json.dumps(expected))
+    
+    def test_create_actor_from_slack(self):
+        self.admin_user = User(username='admin', 
+                               password=TEST_USER_PASSWORD)
+        self.admin_user.save()
+
+        with open('data/slack_event_tests.json') as file:
+            slack_event_payloads = json.load(file)
+            slack_event_payloads[0]['event']['user'] = REAL_USER_ID
         
+        slack_event = SlackEvent(_payload=json.dumps(slack_event_payloads[0]))
+        slack_event.save()
+
+        self.assertTrue(isinstance(slack_event.create_actor_from_slack(), XApiActor))

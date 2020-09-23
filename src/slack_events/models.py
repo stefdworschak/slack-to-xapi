@@ -3,13 +3,21 @@ from datetime import datetime
 import json
 import re
 
+from django.conf import settings
 from django.db import models
+from django.contrib.auth.models import User
+
 from jsonfield import JSONField
 import pytz
+from slack import WebClient
 
 from xapi.models import XApiActor, XApiVerb, XApiObject
+from main.helper import get_or_none
 
-TZ = pytz.timezone("Europe/Dublin") 
+TZ = pytz.timezone('Europe/Dublin')
+SLACK_USER_API = ''
+slack_client = WebClient(token=settings.SLACK_OAUTH_TOKEN)
+
 
 class RawSlackEvent(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
@@ -25,7 +33,7 @@ class SlackEvent(models.Model):
     event_id = models.CharField(max_length=255, null=True, blank=True)
     event_time = models.DateField(null=True, blank=True)
     message_text = models.TextField(null=True, blank=True)
-    user = models.CharField(max_length=255, null=True, blank=True)
+    user_id = models.CharField(max_length=255, null=True, blank=True)
     channel = models.CharField(max_length=255, null=True, blank=True)
     channel_type = models.CharField(max_length=255, null=True, blank=True)
     attachments = JSONField(null=True, blank=True)
@@ -36,7 +44,7 @@ class SlackEvent(models.Model):
     _payload = JSONField(null=True, blank=True)
 
     def __str__(self):
-        return f'@{self.user} {self.event_type} {(self.event_subtype or "")} at {self.event_time}'  # noqa: E501
+        return f'@{self.user_id} {self.event_type} {(self.event_subtype or "")} at {self.event_time}'  # noqa: E501
 
     def save(self, *args, **kwargs):
         """ Custom save function to convert the payload to individual
@@ -48,7 +56,7 @@ class SlackEvent(models.Model):
         self.api_type = data.get('type')
         self.event_id = data.get('event_id')
         self.event_time = self.from_unix_to_localtime(data.get('event_time'))
-        self.user = event_content.get('user')
+        self.user_id = event_content.get('user')
 
         self.event_type = event_content.get('type')
         self.event_subtype = event_content.get('subtype')
@@ -63,7 +71,7 @@ class SlackEvent(models.Model):
         # If event has a message, then take these values
         if event_content.get('message'):
             msg_content = event_content.get('message')
-            self.user = msg_content.get('user')
+            self.user_id = msg_content.get('user')
             self.message_text = msg_content.get('text')
             self.attachments = msg_content.get('attachments')
         if event_content.get('item'):
@@ -105,10 +113,41 @@ class SlackEvent(models.Model):
 
     def slack_event_to_xapi_statement(self):
         xapi_statement = {}
-        xapi_actor = XApiActor.slack_id_to_xapi_actor(self.user)
+        xapi_actor = XApiActor.slack_id_to_xapi_actor(self.user_id)
         xapi_statement.update(xapi_actor)
         xapi_verb = XApiVerb.slack_event_to_xapi_verb(self)
         xapi_statement.update(xapi_verb)
         xapi_object = XApiObject.slack_event_to_xapi_object(self)
         xapi_statement.update(xapi_object)
         return xapi_statement
+    
+    def create_actor_from_slack(self):
+        """ Check if Actor exists and try to create it by looking up the info
+        from their Slack profile if feature is enabled """
+        if not settings.ACTOR_CREATION_ENABLED:
+            return
+        
+        existing_actor = get_or_none(XApiActor, slack_user_id=self.user_id)
+        if existing_actor:
+            return existing_actor
+
+        admin_user = get_or_none(User, username='admin')
+        if not admin_user:
+            return
+
+        slack_call = slack_client.users_info(user=self.user_id)
+        if slack_call.get('ok'):
+            user_data = slack_call.get('user')
+
+        if user_data.get('profile', {}).get('email'):
+            actor = XApiActor(
+                created_by=admin_user,
+                slack_user_id=self.user_id,
+                iri=user_data.get('profile', {}).get('email'),
+                iri_type='mbox',
+                display_name=(
+                    user_data.get('profile', {}).get('display_name')
+                    or user_data.get('real_name'))
+            )
+            actor.save()
+        return get_or_none(XApiActor, slack_user_id=self.user_id)
