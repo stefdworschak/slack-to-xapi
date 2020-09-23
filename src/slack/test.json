@@ -1,0 +1,45 @@
+[{
+    "actor": {
+        "mbox": "user@example.com",
+        "name": "User",
+        "objectType": "Agent"
+    },
+    "verb": {
+        "id": "http://example.com/verbs/sent",
+        "display": {
+            "en-US": "sent"
+        }
+    },
+    "object": {
+        "id": "http://example.com/activities/message",
+        "definition": {
+            "name": {
+                "en-US": "Chat Message"
+            }
+        },
+        "objectType": "Activity"
+    }
+}
+,
+{
+    "actor": {
+        "mbox": "user@example.com",
+        "name": "User",
+        "objectType": "Agent",
+    },
+    "verb": {
+            "id": "http://example.com/verbs/sent",
+            "display": {
+                "en-US": "sent"
+            }
+    },
+    "object": {
+        "id": "http://example.com/activites/message",
+        "definition": {
+            "name": {
+                "en-US": "Chat Message"
+            }
+        },
+        "objectType": "Activity"
+    }
+}]
