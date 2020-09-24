@@ -3,6 +3,8 @@ import json
 from django.db import models
 from django.contrib.auth.models import User
 
+from jsonfield import JSONField
+
 ACTOR_IRI_TYPES = [
     ('mbox', 'Email Address'),
     ('mbox_sha1sum', 'Email SHA1'),
@@ -95,7 +97,7 @@ class XApiObject(models.Model):
     object_type = models.CharField(max_length=255,
                                    choices=ACTIVITY_OBJECT_TYPES,
                                    default='Activity')
-
+    extensions = JSONField(null=True, blank=True)
     # TODO: Add interaction type
 
     def __str__(self):
