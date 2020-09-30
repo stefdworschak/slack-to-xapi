@@ -80,7 +80,8 @@ class XApiObjectAdmin(admin.ModelAdmin):
     fieldsets = [
         (None, { 'fields': [
             ('iri',), ('display_name',), ('language',), ('description',),
-            ('activity_type',), ('more_info',), ('object_type',)]
+            ('activity_type',), ('more_info',), ('object_type',),
+            ('extensions',)]
             }),
     ]
 

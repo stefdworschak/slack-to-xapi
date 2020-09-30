@@ -1,0 +1,18 @@
+version: "3.4"
+
+services:
+  webapp:
+    image: slack-to-xapi
+    volumes:
+      - ${PWD}/src/slack_events/:/app/slack_events/
+      - ${PWD}/src/xapi/:/app/xapi/
+      - ${PWD}/data/:/app/data/
+    secrets:
+      - source: dotenv
+        target: /app/main/.env
+    ports:
+      - "8000:8000"
+
+secrets:
+  dotenv:
+    file: .env

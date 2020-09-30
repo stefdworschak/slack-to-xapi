@@ -113,10 +113,9 @@ class SlackEvent(models.Model):
         regex_pattern = r'[<][@]((?:[A-Z]|[0-9])*)[>]'
         return re.findall(regex_pattern, message_text)
 
-
     def slack_event_to_xapi_statement(self):
         xapi_statement = {}
-        xapi_actor = XApiActor.slack_id_to_xapi_actor(self.user_id)
+        xapi_actor = XApiActor.slack_id_to_xapi_actor(self)
         xapi_statement.update(xapi_actor)
         xapi_verb = XApiVerb.slack_event_to_xapi_verb(self)
         xapi_statement.update(xapi_verb)
@@ -167,4 +166,4 @@ class SlackEvent(models.Model):
                 or user_data.get('real_name'))
         )
         actor.save()
-        return get_or_none(XApiActor, slack_user_id=self.user_id)
+        return  get_or_none(XApiActor, slack_user_id=self.user_id)

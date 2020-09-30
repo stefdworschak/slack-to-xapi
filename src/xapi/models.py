@@ -5,6 +5,8 @@ from django.contrib.auth.models import User
 
 from jsonfield import JSONField
 
+from main.helper import get_or_none
+
 ACTOR_IRI_TYPES = [
     ('mbox', 'Email Address'),
     ('mbox_sha1sum', 'Email SHA1'),
@@ -37,6 +39,23 @@ SLACK_FIELD_TYPE_CHOICES = [
     ('object', 'Object'),
 ]
 
+EXTENSIONS = {
+    "team_id": "http://example.com/extensions/team_id",
+    "api_type": "http://example.com/extensions/api_type",
+    "event_type": "http://example.com/extensions/event_type",
+    "event_subtype": "http://example.com/extensions/event_subtype",
+    "event_id": "http://example.com/extensions/event_id",
+    "event_time": "http://example.com/extensions/event_time",
+    "message_text": "http://example.com/extensions/message_text",
+    "user_id": "http://example.com/extensions/user_id",
+    "channel": "http://example.com/extensions/channel",
+    "channel_type": "http://example.com/extensions/channel_type",
+    "attachments": "http://example.com/extensions/attachments",
+    "ts": "http://example.com/extensions/ts",
+    "mentioned_users": "http://example.com/extensions/mentioned_users",
+    "has_mentions": "http://example.com/extensions/has_mentions",
+}
+
 
 class XApiActor(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
@@ -59,11 +78,19 @@ class XApiActor(models.Model):
         return f'{self.iri} (Slack: {self.slack_user_id})'
 
     @staticmethod
-    def slack_id_to_xapi_actor(slack_user_id):
-        actor = XApiActor.objects.get(slack_user_id=slack_user_id)
+    def slack_id_to_xapi_actor(event):
+        """ Converts the actor information from a Slack Event to an actor
+        partial xAPI statement """
+        prefix = ''
+        actor = get_or_none(XApiActor, slack_user_id=event.user_id)
+        if not actor:
+            actor = event.create_actor_from_slack()
+        if actor.iri_type == 'mbox':
+            prefix = 'mailto:'
+            
         return {
             'actor': {
-                actor.iri_type: actor.iri,
+                actor.iri_type: (prefix + actor.iri),
                 'name': actor.display_name,
                 'objectType': actor.object_type,
             }
@@ -97,7 +124,13 @@ class XApiObject(models.Model):
     object_type = models.CharField(max_length=255,
                                    choices=ACTIVITY_OBJECT_TYPES,
                                    default='Activity')
-    extensions = JSONField(null=True, blank=True)
+    extensions = JSONField(null=True, blank=True,
+                           help_text=('Needs to be a valid list with the '
+                                      'Slack Event attributes to be added to '
+                                      'the Extensions '
+                                      '(e.g. ["message_text", "event_id"]. '
+                                      'The available Extensions can be '
+                                      'configured in xapi/models.py'))
     # TODO: Add interaction type
 
     def __str__(self):
@@ -113,7 +146,7 @@ class XApiObject(models.Model):
             object_dict[field.slack_event_field] = expected_value
         return object_dict
     
-    def model_to_xapi_object(self):
+    def model_to_xapi_object(self, event):
         xapi_object =  {
                 "object": {
                     "id": self.iri,
@@ -133,6 +166,14 @@ class XApiObject(models.Model):
             xapi_object['object']['definition']['type'] = self.activity_type
         if self.more_info:
             xapi_object['object']['definition']['moreInfo'] = self.more_info
+
+        if self.extensions:
+            extensions = json.loads(self.extensions)
+            xapi_object['object']['definition'].setdefault('extensions', {})
+            for extension in extensions:
+                extension_key = EXTENSIONS.get(extension)
+                extension_value = getattr(event, extension)
+                xapi_object['object']['definition']['extensions'][extension_key] = extension_value  # noqa: E501
         return xapi_object
 
     @staticmethod
@@ -149,7 +190,7 @@ class XApiObject(models.Model):
             if 'mentioned_users' in event:
                 del event['mentioned_users']
             if object_set.issubset(set(slack_event.__dict__.items())):
-                return xobject.model_to_xapi_object()
+                return xobject.model_to_xapi_object(slack_event)
         return
 
     class Meta:

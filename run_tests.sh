@@ -1,0 +1,1 @@
+docker-compose exec webapp ./manage.py test
