@@ -12,6 +12,11 @@ services:
         target: /app/main/.env
     ports:
       - "8000:8000"
+    depends_on: 
+      - rabbitmq
+  rabbitmq:
+    image: rabbitmq:3.8.9-alpine
+
 
 secrets:
   dotenv:

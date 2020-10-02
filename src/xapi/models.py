@@ -159,7 +159,7 @@ class XApiObject(models.Model):
                 }
             }
         if self.description:
-            xapi_object['object']['description'] = {
+            xapi_object['object']['definition']['description'] = {
                 self.language: self.description
             }
         if self.activity_type:
@@ -167,8 +167,10 @@ class XApiObject(models.Model):
         if self.more_info:
             xapi_object['object']['definition']['moreInfo'] = self.more_info
 
-        if self.extensions:
-            extensions = json.loads(self.extensions)
+        extensions = self.extensions
+        if extensions:
+            if not isinstance(extensions, list): 
+                extensions = json.loads(extensions)
             xapi_object['object']['definition'].setdefault('extensions', {})
             for extension in extensions:
                 extension_key = EXTENSIONS.get(extension)
@@ -296,3 +298,11 @@ class SlackObjectField(SlackField):
     class Meta:
         verbose_name = 'Slack-Object Field'
         verbose_name_plural = 'Slack-Object Fields'
+
+class LrsConfig(models.Model):
+    lrs_endpoint = models.CharField(max_length=255, unique=True)
+    lrs_auth_user = models.CharField(max_length=255)
+    lrs_auth_pw = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.lrs_endpoint

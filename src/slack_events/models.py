@@ -116,6 +116,8 @@ class SlackEvent(models.Model):
     def slack_event_to_xapi_statement(self):
         xapi_statement = {}
         xapi_actor = XApiActor.slack_id_to_xapi_actor(self)
+        if not xapi_actor:
+            xapi_actor = self.create_actor_from_slack()
         xapi_statement.update(xapi_actor)
         xapi_verb = XApiVerb.slack_event_to_xapi_verb(self)
         xapi_statement.update(xapi_verb)

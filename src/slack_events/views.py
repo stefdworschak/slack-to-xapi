@@ -1,11 +1,14 @@
 import json
+import logging
 
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
 from .models import RawSlackEvent, SlackEvent
+from .tasks import send_xapi_statement_to_lrs
 
+log = logging.getLogger(__name__)
 
 
 @csrf_exempt
@@ -20,13 +23,11 @@ def slack_api(request):
     
     if not request_body.get('event'):
         return JsonResponse({'ok': False})
-    
-    #event = request_body.get('event')
-    #slack_event = RawSlackEvent(payload=request_body)
-    #slack_event.save()
-    print(request_body.get('type'))
     slack_event = SlackEvent(_payload=json.dumps(request_body))
     slack_event.save()
+    xapi_statement = slack_event.slack_event_to_xapi_statement()
+    log.debug(xapi_statement)
+    send_xapi_statement_to_lrs.delay(xapi_statement)
     return JsonResponse({'ok': True})
 
 
