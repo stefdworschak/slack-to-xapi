@@ -8,6 +8,7 @@ from jsonfield import JSONField
 from main.helper import get_or_none
 
 ACTOR_IRI_TYPES = [
+    ('account', 'Account'),
     ('mbox', 'Email Address'),
     ('mbox_sha1sum', 'Email SHA1'),
     ('openid', 'OpenID'),
@@ -38,6 +39,8 @@ SLACK_FIELD_TYPE_CHOICES = [
     ('verb', 'Verb'),
     ('object', 'Object'),
 ]
+
+SLACK_URL = 'http://slack.com'
 
 EXTENSIONS = {
     "team_id": "http://example.com/extensions/team_id",
@@ -73,8 +76,6 @@ class XApiActor(models.Model):
                                    default='Agent')
 
     def __str__(self):
-        #if self.display_name:
-        #    return f'{self.display_name} (Slack: {self.slack_user_id})'
         return f'{self.iri} (Slack: {self.slack_user_id})'
 
     @staticmethod
@@ -85,20 +86,31 @@ class XApiActor(models.Model):
         actor = get_or_none(XApiActor, slack_user_id=event.user_id)
         if not actor:
             actor = event.create_actor_from_slack()
-        if actor.iri_type == 'mbox':
-            prefix = 'mailto:'
-            
-        return {
+
+        actor_statement = {
             'actor': {
-                actor.iri_type: (prefix + actor.iri),
                 'name': actor.display_name,
                 'objectType': actor.object_type,
             }
         }
 
+        if actor.iri_type == 'mbox':
+            prefix = 'mailto:'
+
+        if actor.iri_type == 'account':
+            actor_statement['actor']['account'] = {
+                'homePage': SLACK_URL,
+                'name': actor.iri
+            }
+        else:
+            actor_statement['actor'][actor.iri_type] = (prefix + actor.iri)
+
+        return actor_statement
+
     class Meta:
         verbose_name = 'XApi Actor'
         verbose_name_plural = 'XApi Actors'
+
 
 class XApiObject(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
@@ -120,7 +132,7 @@ class XApiObject(models.Model):
     more_info = models.CharField(
         max_length=1048,
         help_text=('Enter an IRI for more info.'),
-        null=True, blank=True)    
+        null=True, blank=True)
     object_type = models.CharField(max_length=255,
                                    choices=ACTIVITY_OBJECT_TYPES,
                                    default='Activity')
@@ -135,7 +147,7 @@ class XApiObject(models.Model):
 
     def __str__(self):
         return f'{self.display_name} ({self.language})'
-    
+
     def object_fields_to_dict(self):
         object_dict = {}
         fields_for_object = SlackObjectField.objects.filter(xapi_object=self)
@@ -145,9 +157,9 @@ class XApiObject(models.Model):
                 expected_value = None
             object_dict[field.slack_event_field] = expected_value
         return object_dict
-    
+
     def model_to_xapi_object(self, event):
-        xapi_object =  {
+        xapi_object = {
                 "object": {
                     "id": self.iri,
                     "definition": {
@@ -169,7 +181,7 @@ class XApiObject(models.Model):
 
         extensions = self.extensions
         if extensions:
-            if not isinstance(extensions, list): 
+            if not isinstance(extensions, list):
                 extensions = json.loads(extensions)
             xapi_object['object']['definition'].setdefault('extensions', {})
             for extension in extensions:
@@ -199,7 +211,7 @@ class XApiObject(models.Model):
         verbose_name = 'XApi Object'
         verbose_name_plural = 'XApi Objects'
 
-    
+
 class XApiVerb(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -223,7 +235,7 @@ class XApiVerb(models.Model):
                 expected_value = None
             verb_dict[field.slack_event_field] = expected_value
         return verb_dict
-    
+
     def model_to_xapi_verb(self):
         return {
                 "verb": {
@@ -272,15 +284,15 @@ class SlackField(models.Model):
         return f'Connect {self.slack_event_field} as {self.expected_value}'
 
 
-class SlackVerbField(SlackField):    
+class SlackVerbField(SlackField):
     xapi_verb = models.ForeignKey(
-        XApiVerb, 
+        XApiVerb,
         related_name='slack_field_connector',
         on_delete=models.CASCADE)
 
     def __str__(self):
         return f'Connect {self.slack_event_field} as {self.expected_value}'
-    
+
     class Meta:
         verbose_name = 'Slack-Verb Field'
         verbose_name_plural = 'Slack-Verb Fields'
@@ -288,7 +300,7 @@ class SlackVerbField(SlackField):
 
 class SlackObjectField(SlackField):
     xapi_object = models.ForeignKey(
-        XApiObject, 
+        XApiObject,
         related_name='slack_field_connector',
         on_delete=models.CASCADE)
 
@@ -298,6 +310,7 @@ class SlackObjectField(SlackField):
     class Meta:
         verbose_name = 'Slack-Object Field'
         verbose_name_plural = 'Slack-Object Fields'
+
 
 class LrsConfig(models.Model):
     lrs_endpoint = models.CharField(max_length=255, unique=True)
