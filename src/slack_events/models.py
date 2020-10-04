@@ -188,5 +188,5 @@ class SlackEvent(models.Model):
 class XApiStatement(models.Model):
     statement = JSONField()
     delivered = models.BooleanField(default=False)
-    slack_event = models.ForeignKeyField(SlackEvent, on_delete=models.CASCADE,
+    slack_event = models.ForeignKey(SlackEvent, on_delete=models.CASCADE,
                                          related_name="slack_event")
