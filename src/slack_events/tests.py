@@ -4,7 +4,7 @@ from django.test import TestCase
 
 from xapi.models import (XApiActor, XApiVerb, XApiObject, SlackVerbField,
                          SlackObjectField)
-from .models import SlackEvent
+from .models import SlackEvent, XApiStatement
 
 from django.contrib.auth.models import User
 
@@ -57,9 +57,9 @@ class SlackEventUnitTest(TestCase):
     def test_slack_event_to_xapi_statement(self):
         expected = {
             'actor': {
-                'mbox': 'mailto:user@example.com',
                 'name': 'User',
                 'objectType': 'Agent',
+                'mbox': 'mailto:user@example.com',
             },
             'verb': {
                     'id': 'http://example.com/verbs/sent',
@@ -79,23 +79,27 @@ class SlackEventUnitTest(TestCase):
         }
         with open('data/slack_event_tests.json') as file:
             slack_event_payloads = json.load(file)
-        
+
         slack_event = SlackEvent(_payload=json.dumps(slack_event_payloads[0]))
         slack_event.save()
 
-        self.assertEquals(json.dumps(slack_event.slack_event_to_xapi_statement()),
-                          json.dumps(expected))
-    
+        self.assertEquals(
+            json.dumps(slack_event.slack_event_to_xapi_statement()),
+            json.dumps(expected))
+        xapi_statement = XApiStatement.objects.get(slack_event=slack_event)
+        self.assertTrue(isinstance(xapi_statement, XApiStatement))
+
     def test_create_actor_from_slack(self):
-        self.admin_user = User(username='admin', 
+        self.admin_user = User(username='admin',
                                password=TEST_USER_PASSWORD)
         self.admin_user.save()
 
         with open('data/slack_event_tests.json') as file:
             slack_event_payloads = json.load(file)
             slack_event_payloads[0]['event']['user'] = REAL_USER_ID
-        
+
         slack_event = SlackEvent(_payload=json.dumps(slack_event_payloads[0]))
         slack_event.save()
 
-        self.assertTrue(isinstance(slack_event.create_actor_from_slack(), XApiActor))
+        self.assertTrue(isinstance(slack_event.create_actor_from_slack(),
+                                   XApiActor))
