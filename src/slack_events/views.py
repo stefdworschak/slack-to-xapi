@@ -29,7 +29,7 @@ def slack_api(request):
 
     xapi_statement = slack_event.slack_event_to_xapi_statement()
     if xapi_statement:
-        send_xapi_statement_to_lrs.delay(xapi_statement)
+        send_xapi_statement_to_lrs.delay(xapi_statement, slack_event)
         return JsonResponse({'ok': True})
     return JsonResponse({'ok': False})
 
