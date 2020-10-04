@@ -27,6 +27,10 @@ class RawSlackEvent(models.Model):
     payload = JSONField(
         null=True, load_kwargs={'object_pairs_hook': collections.OrderedDict})
 
+    class Meta:
+        verbose_name = "Raw Slack Event"
+        verbose_name_plural = 'Raw Slack Events'
+
 
 class SlackEvent(models.Model):
     team_id = models.CharField(max_length=25, null=True, blank=True)
@@ -45,6 +49,10 @@ class SlackEvent(models.Model):
     has_mentions = models.BooleanField(default=False)
 
     _payload = JSONField(null=True, blank=True)
+
+    class Meta:
+        verbose_name = "Slack Event"
+        verbose_name_plural = 'Slack Events'
 
     def __str__(self):
         return f'@{self.user_id} {self.event_type} {(self.event_subtype or "")} at {self.event_time}'  # noqa: E501
@@ -133,9 +141,9 @@ class SlackEvent(models.Model):
         if not xapi_object:
             return None
         xapi_statement.update(xapi_object)
-        statement = XApiStatement(statement=json.dumps(XApiStatement, indent=4,
-                                  default=str),
-                                  slack_event=self)
+        statement = XApiStatement(
+            statement=json.dumps(xapi_statement, default=str),
+            slack_event=self)
         statement.save()
         return xapi_statement
 
@@ -190,3 +198,10 @@ class XApiStatement(models.Model):
     delivered = models.BooleanField(default=False)
     slack_event = models.ForeignKey(SlackEvent, on_delete=models.CASCADE,
                                     related_name="slack_event")
+
+    class Meta:
+        verbose_name = "xAPI Statement"
+        verbose_name_plural = 'xAPI Statements'
+
+    def __str__(self):
+        return f'{self.slack_event} (delivered: {self.delivered})'

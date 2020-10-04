@@ -113,6 +113,7 @@ class XApiActor(models.Model):
 
 
 class XApiObject(models.Model):
+    # TODO: Add interaction type
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -143,7 +144,6 @@ class XApiObject(models.Model):
                                       '(e.g. ["message_text", "event_id"]. '
                                       'The available Extensions can be '
                                       'configured in xapi/models.py'))
-    # TODO: Add interaction type
 
     def __str__(self):
         return f'{self.display_name} ({self.language})'

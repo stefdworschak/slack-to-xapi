@@ -21,8 +21,6 @@ services:
     ports: []
     depends_on:
       - rabbitmq
-
-
   rabbitmq:
     image: rabbitmq:3.8.9-alpine
   
