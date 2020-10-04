@@ -113,21 +113,21 @@ class XApiConversionUnitTest(TestCase):
     def test_slack_id_to_xapi_actor_with_account(self):
         with open('data/slack_event_tests.json') as file:
             slack_event_payloads = json.load(file)
-        slack_event = SlackEvent(_payload=json.dumps(slack_event_payloads[0]))
+        slack_event = SlackEvent(_payload=json.dumps(slack_event_payloads[2]))
         slack_event.save()
 
         expected = {
             "actor": {
-                "name": "Actor 2",
+                "name": "Actor 3",
                 "objectType": "Agent",
                 "account": {
                     "homePage": "http://slack.com",
-                    "name": "slack_actor"
+                    "name": "slack_actor",
                 }
             }
         }
 
-        xapi_actor = self.a2.slack_id_to_xapi_actor(slack_event)
+        xapi_actor = self.a3.slack_id_to_xapi_actor(slack_event)
         self.assertTrue(isinstance(xapi_actor, dict))
         self.assertEquals(xapi_actor, expected)
 
@@ -210,6 +210,5 @@ class XApiConversionUnitTest(TestCase):
             slack_event_payloads = json.load(file)
         slack_event = SlackEvent(_payload=json.dumps(slack_event_payloads[0]))
         slack_event.save()
-        print(slack_event.slack_event_to_xapi_statement())
         self.assertTrue(isinstance(slack_event.slack_event_to_xapi_statement(),
                                    dict))

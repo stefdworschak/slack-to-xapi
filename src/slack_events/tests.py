@@ -57,9 +57,9 @@ class SlackEventUnitTest(TestCase):
     def test_slack_event_to_xapi_statement(self):
         expected = {
             'actor': {
-                'mbox': 'mailto:user@example.com',
                 'name': 'User',
                 'objectType': 'Agent',
+                'mbox': 'mailto:user@example.com',
             },
             'verb': {
                     'id': 'http://example.com/verbs/sent',
