@@ -68,7 +68,8 @@ class SlackEvent(models.Model):
         self.channel_type = event_content.get('channel_type')
         self.attachments = event_content.get('attachments')
         self.ts = self.from_unix_to_localtime(
-            timestamp=(event_content.get('ts') or event_content.get('event_ts')),
+            timestamp=(event_content.get('ts')
+                       or event_content.get('event_ts')),
             tz=TZ)
 
         # If event has a message, then take these values
@@ -83,19 +84,17 @@ class SlackEvent(models.Model):
             self.event_subtype = item_content.get('type')
             self.channel = item_content.get('channel')
 
-        #if self.check_mentions(self.message_text):
-        #    pass
-        self.mentioned_users = self.get_mentions_from_message(self.message_text)
+        self.mentioned_users = self.get_mentions_from_message(self.message_text)  # noqa: E501
         if self.mentioned_users:
             self.has_mentions = True
         super(SlackEvent, self).save(*args, **kwargs)
 
     def get_attachments(self):
         return json.loads(self.attachments)
-    
+
     def get_mentioned_users(self):
         return json.loads(self.mentioned_users)
-    
+
     def get_payload(self):
         return json.loads(self._payload)
 
@@ -116,22 +115,37 @@ class SlackEvent(models.Model):
     def slack_event_to_xapi_statement(self):
         xapi_statement = {}
         xapi_actor = XApiActor.slack_id_to_xapi_actor(self)
+        # If actor is not found try yo create the actor automatically
+        # if the setting is enabled
         if not xapi_actor:
             xapi_actor = self.create_actor_from_slack()
+        # If no actor is found and a new one cannot be created return None
+        if not xapi_actor:
+            return None
         xapi_statement.update(xapi_actor)
         xapi_verb = XApiVerb.slack_event_to_xapi_verb(self)
+        # If no matching verb was found return None
+        if not xapi_verb:
+            return None
         xapi_statement.update(xapi_verb)
         xapi_object = XApiObject.slack_event_to_xapi_object(self)
+        # If no matching object was found return None
+        if not xapi_object:
+            return None
         xapi_statement.update(xapi_object)
+        statement = XApiStatement(statement=json.dumps(XApiStatement, indent=4,
+                                  default=str),
+                                  slack_event=self)
+        statement.save()
         return xapi_statement
-    
+
     def create_actor_from_slack(self):
         """ Check if Actor exists and try to create it by looking up the info
         from their Slack profile if feature is enabled """
         if not settings.ACTOR_CREATION_ENABLED:
             logger.warning("Automatic actor creation not enabled")
             return
-        
+
         existing_actor = get_or_none(XApiActor, slack_user_id=self.user_id)
         if existing_actor:
             return existing_actor
@@ -144,7 +158,7 @@ class SlackEvent(models.Model):
         slack_call = slack_client.users_info(user=self.user_id)
         if not slack_call.get('ok'):
             return
-        
+
         user_data = slack_call.get('user')
         email = user_data.get('profile', {}).get('email')
         if not email:
@@ -168,4 +182,11 @@ class SlackEvent(models.Model):
                 or user_data.get('real_name'))
         )
         actor.save()
-        return  get_or_none(XApiActor, slack_user_id=self.user_id)
+        return get_or_none(XApiActor, slack_user_id=self.user_id)
+
+
+class XApiStatement(models.Model):
+    statement = JSONField()
+    delivered = models.BooleanField(default=False)
+    slack_event = models.ForeignKeyField(SlackEvent, on_delete=models.CASCADE,
+                                         related_name="slack_event")

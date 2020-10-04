@@ -7,11 +7,12 @@ logger = logging.getLogger(__name__)
 def get_or_none(model, **kwargs):
     try:
         return model.objects.get(**kwargs)
-    except model.DoesNotExist as does_not_exist:
+    except model.DoesNotExist:
         logger.warning(f'User matching query does not exist: {kwargs}')
-    except model.MultipleObjectsReturned as multiple_returned:
-        logger.warning(f'User matching query does not exist: {kwargs}')
+    except model.MultipleObjectsReturned:
+        logger.warning(f'Multiple objects returned for query: {kwargs}')
     return None
+
 
 def create_sha1(email):
     hashed_string = hashlib.sha1()

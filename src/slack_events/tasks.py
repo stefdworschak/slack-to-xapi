@@ -4,13 +4,14 @@ import logging
 import requests
 
 from celery import shared_task
+from slack_events.models import XApiStatement
 from xapi.models import LrsConfig
 
 log = logging.getLogger(__name__)
 
 
 @shared_task
-def send_xapi_statement_to_lrs(xapi_statement):
+def send_xapi_statement_to_lrs(xapi_statement, slack_event):
     log.info(xapi_statement)
     lrs_configs = LrsConfig.objects.all()
     if not lrs_configs:
@@ -28,5 +29,8 @@ def send_xapi_statement_to_lrs(xapi_statement):
     if res.status_code != 200:
         log.exception(res.content)
         return
-    log.info("successfully sent statement")
+    xapi_statement = XApiStatement.objects.filter(slack_event=slack_event)
+    if xapi_statement:
+        xapi_statement.update(delivered=True)
+    log.info("Successfully sent xAPI statement to LRS")
     return

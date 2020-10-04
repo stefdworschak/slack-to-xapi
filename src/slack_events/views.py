@@ -20,15 +20,18 @@ def slack_api(request):
 
     if request_body.get('type') == 'url_verification':
         return JsonResponse({'challenge': request_body.get('challenge')})
-    
+
     if not request_body.get('event'):
         return JsonResponse({'ok': False})
+
     slack_event = SlackEvent(_payload=json.dumps(request_body))
     slack_event.save()
+
     xapi_statement = slack_event.slack_event_to_xapi_statement()
-    log.debug(xapi_statement)
-    send_xapi_statement_to_lrs.delay(xapi_statement)
-    return JsonResponse({'ok': True})
+    if xapi_statement:
+        send_xapi_statement_to_lrs.delay(xapi_statement)
+        return JsonResponse({'ok': True})
+    return JsonResponse({'ok': False})
 
 
 def statement_manager(request):
