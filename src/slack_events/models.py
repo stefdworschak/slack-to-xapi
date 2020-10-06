@@ -47,6 +47,7 @@ class SlackEvent(models.Model):
     ts = models.DateTimeField(null=True, blank=True)
     mentioned_users = JSONField(null=True, blank=True)
     has_mentions = models.BooleanField(default=False)
+    has_files = models.BooleanField(default=False)
 
     _payload = JSONField(null=True, blank=True)
 
@@ -67,7 +68,8 @@ class SlackEvent(models.Model):
         self.api_type = data.get('type')
         self.event_id = data.get('event_id')
         self.event_time = self.from_unix_to_localtime(data.get('event_time'))
-        self.user_id = event_content.get('user')
+        self.user_id = (event_content.get('user')
+                            or event_content.get('user_id'))
 
         self.event_type = event_content.get('type')
         self.event_subtype = event_content.get('subtype')
@@ -91,6 +93,11 @@ class SlackEvent(models.Model):
             self.message_text = event_content.get('reaction')
             self.event_subtype = item_content.get('type')
             self.channel = item_content.get('channel')
+
+        self.has_files = bool(
+            event_content.get('files') or event_content.get('file') or
+            event_content.get('attachment', {}).get('files') or
+            event_content.get('item', {}).get('message', {}).get('items'))
 
         self.mentioned_users = self.get_mentions_from_message(self.message_text)  # noqa: E501
         if self.mentioned_users:
@@ -117,6 +124,8 @@ class SlackEvent(models.Model):
 
     @staticmethod
     def get_mentions_from_message(message_text):
+        if not message_text or message_text == '':
+            return None
         regex_pattern = r'[<][@]((?:[A-Z]|[0-9])*)[>]'
         return re.findall(regex_pattern, message_text)
 
@@ -130,16 +139,19 @@ class SlackEvent(models.Model):
         # If no actor is found and a new one cannot be created return None
         if not xapi_actor:
             return None
+        logger.info("actor exsist")
         xapi_statement.update(xapi_actor)
         xapi_verb = XApiVerb.slack_event_to_xapi_verb(self)
         # If no matching verb was found return None
         if not xapi_verb:
             return None
+        logger.info("verb exsist")
         xapi_statement.update(xapi_verb)
         xapi_object = XApiObject.slack_event_to_xapi_object(self)
         # If no matching object was found return None
         if not xapi_object:
             return None
+        logger.info("object exsist")
         xapi_statement.update(xapi_object)
         statement = XApiStatement(
             statement=json.dumps(xapi_statement, default=str),

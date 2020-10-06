@@ -23,7 +23,7 @@ def slack_api(request):
 
     if not request_body.get('event'):
         return JsonResponse({'ok': False})
-
+    log.exception(request_body)
     schedule_xapi_task.delay(request_body)
     return JsonResponse({'ok': True})
 
