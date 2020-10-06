@@ -148,16 +148,6 @@ class XApiObject(models.Model):
     def __str__(self):
         return f'{self.display_name} ({self.language})'
 
-    def object_fields_to_dict(self):
-        object_dict = {}
-        fields_for_object = SlackObjectField.objects.filter(xapi_object=self)
-        for field in fields_for_object:
-            expected_value = field.expected_value
-            if field.expected_value == 'None':
-                expected_value = None
-            object_dict[field.slack_event_field] = expected_value
-        return object_dict
-
     def model_to_xapi_object(self, event):
         xapi_object = {
                 "object": {
@@ -190,21 +180,45 @@ class XApiObject(models.Model):
                 xapi_object['object']['definition']['extensions'][extension_key] = extension_value  # noqa: E501
         return xapi_object
 
+    def object_fields_to_dict(self):
+        object_dict = {}
+        fields_for_object = SlackObjectField.objects.filter(xapi_object=self)
+
+        for field in fields_for_object:
+            object_dict.setdefault(field.field_group, {})
+            expected_value = field.expected_value
+            if field.expected_value == 'None':
+                expected_value = None
+            if (field.expected_value == 'True'
+                    or field.expected_value == 'False'):
+                expected_value = field.expected_value == 'True'
+            object_dict[field.field_group][field.slack_event_field] = expected_value  # noqa: E501
+        print(object_dict)
+        if not object_dict:
+            return None
+        return object_dict
+
     @staticmethod
     def slack_event_to_xapi_object(slack_event):
         for xobject in XApiObject.objects.all():
-            object_fields = xobject.object_fields_to_dict()
-            if not object_fields:
+            object_fieldset = xobject.object_fields_to_dict()
+            if not object_fieldset:
                 continue
             event = slack_event.__dict__
-            object_set = set(object_fields.items())
             # Removing JSON fields because they cannot be converted to a set
             if '_payload' in event:
                 del event['_payload']
             if 'mentioned_users' in event:
                 del event['mentioned_users']
-            if object_set.issubset(set(slack_event.__dict__.items())):
-                return xobject.model_to_xapi_object(slack_event)
+            if 'attachments' in event:
+                del event['attachments']
+            for fields in object_fieldset.values():
+                object_set = set(fields.items())
+                if object_set.issubset(set(slack_event.__dict__.items())):
+                    print("Object Set: ", json.dumps(dict(object_set), default=str))
+                    print("Event Fields: ", json.dumps(dict(set(slack_event.__dict__.items())), default=str))
+                    print("Object: ", xobject.display_name)
+                    return xobject.model_to_xapi_object(slack_event)
         return
 
     class Meta:
@@ -230,10 +244,14 @@ class XApiVerb(models.Model):
         verb_dict = {}
         fields_for_verb = SlackVerbField.objects.filter(xapi_verb=self)
         for field in fields_for_verb:
+            verb_dict.setdefault(field.field_group, {})
             expected_value = field.expected_value
             if field.expected_value == 'None':
                 expected_value = None
-            verb_dict[field.slack_event_field] = expected_value
+            if (field.expected_value == 'True'
+                    or field.expected_value == 'False'):
+                expected_value = bool(field.expected_value)
+            verb_dict[field.field_group][field.slack_event_field] = expected_value  # noqa: E501
         return verb_dict
 
     def model_to_xapi_verb(self):
@@ -249,18 +267,21 @@ class XApiVerb(models.Model):
     @staticmethod
     def slack_event_to_xapi_verb(slack_event):
         for verb in XApiVerb.objects.all():
-            verb_fields = verb.verb_fields_to_dict()
-            if not verb_fields:
+            verb_fieldset = verb.verb_fields_to_dict()
+            if not verb_fieldset:
                 continue
             event = slack_event.__dict__
-            verb_set = set(verb_fields.items())
             # Removing JSON fields because they cannot be converted to a set
             if '_payload' in event:
                 del event['_payload']
             if 'mentioned_users' in event:
                 del event['mentioned_users']
-            if verb_set.issubset(set(slack_event.__dict__.items())):
-                return verb.model_to_xapi_verb()
+            if 'attachments' in event:
+                del event['attachments']
+            for fields in verb_fieldset.values():
+                verb_set = set(fields.items())
+                if verb_set.issubset(set(slack_event.__dict__.items())):
+                    return verb.model_to_xapi_verb()
         return
 
     class Meta:
@@ -289,6 +310,11 @@ class SlackVerbField(SlackField):
         XApiVerb,
         related_name='slack_field_connector',
         on_delete=models.CASCADE)
+    field_group = models.CharField(
+        max_length=50,
+        help_text=("Use this field to group together multiple "
+                   "SlackVerbFields"),
+        null=True, blank=True)
 
     def __str__(self):
         return f'Connect {self.slack_event_field} as {self.expected_value}'
@@ -303,6 +329,11 @@ class SlackObjectField(SlackField):
         XApiObject,
         related_name='slack_field_connector',
         on_delete=models.CASCADE)
+    field_group = models.CharField(
+        max_length=50,
+        help_text=("Use this field to group together multiple "
+                   "SlackObjectFields"),
+        null=True, blank=True)
 
     def __str__(self):
         return f'Connect {self.slack_event_field} as {self.expected_value}'

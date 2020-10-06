@@ -6,11 +6,13 @@ from .models import (XApiObject, XApiActor, XApiVerb, SlackVerbField,
 class SlackVerbFieldAdmin(admin.ModelAdmin):
     model = SlackVerbField
     list_display = ('xapi_verb', 'slack_event_field',
-                    'expected_value')
-    list_filter = ('xapi_verb__display_name', 'slack_event_field', 'expected_value')
+                    'expected_value', 'field_group')
+    list_filter = ('xapi_verb__display_name', 'slack_event_field',
+                   'expected_value', 'field_group')
     fieldsets = [
-        (None, { 'fields': [
-            ('slack_event_field',), ('expected_value',), ('xapi_verb',)]
+        (None, {'fields': [
+            ('slack_event_field',), ('expected_value',), ('xapi_verb',),
+            ('field_group',)]
             }),
     ]
 
@@ -24,11 +26,13 @@ class SlackVerbFieldAdmin(admin.ModelAdmin):
 class SlackObjectFieldAdmin(admin.ModelAdmin):
     model = SlackObjectField
     list_display = ('xapi_object', 'slack_event_field',
-                    'expected_value')
-    list_filter = ('xapi_object__display_name', 'slack_event_field', 'expected_value')
+                    'expected_value', 'field_group')
+    list_filter = ('xapi_object__display_name', 'slack_event_field',
+                   'expected_value', 'field_group')
     fieldsets = [
-        (None, { 'fields': [
-            ('slack_event_field',), ('expected_value',), ('xapi_object',)]
+        (None, {'fields': [
+            ('slack_event_field',), ('expected_value',), ('xapi_object',),
+            ('field_group',)]
             }),
     ]
 
@@ -44,7 +48,7 @@ class XApiActorAdmin(admin.ModelAdmin):
     list_display = ('iri', 'iri_type', 'display_name', 'slack_user_id')
     list_filter = ('iri', 'iri_type', 'display_name', 'slack_user_id')
     fieldsets = [
-        (None, { 'fields': [
+        (None, {'fields': [
             ('iri',), ('iri_type',), ('display_name',), ('slack_user_id',),
             ('object_type',)]
             }),
@@ -62,7 +66,7 @@ class XApiVerbAdmin(admin.ModelAdmin):
     list_display = ('iri', 'display_name', 'language')
     list_filter = ('iri', 'display_name', 'language')
     fieldsets = [
-        (None, { 'fields': [
+        (None, {'fields': [
             ('iri',), ('display_name',), ('language',)]
             }),
     ]
@@ -79,7 +83,7 @@ class XApiObjectAdmin(admin.ModelAdmin):
     list_display = ('iri', 'display_name', 'language')
     list_filter = ('iri', 'display_name', 'language')
     fieldsets = [
-        (None, { 'fields': [
+        (None, {'fields': [
             ('iri',), ('display_name',), ('language',), ('description',),
             ('activity_type',), ('more_info',), ('object_type',),
             ('extensions',)]

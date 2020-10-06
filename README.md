@@ -10,6 +10,13 @@ Main system requirements:
  - Interoperable with any xAPI conformant LRS
  - Available for any xAPI professional or enthusiast
 
+## TODOs
+
+- Retrieve permalink from event channel and ts using `chat.getPermalink`
+- Add `interaction_type` to Object
+- Add `group` to Actor and Object
+- Add logic for `mentions` (e.g. add extra xapi statement for a message that mentions other users)
+
 ## User Stories
 
 - As a Learning Provider, I want to measure how much students engage on Slack, so that I can validate that Slack is a useful tool to support their learning and also measure the usage of Slack.

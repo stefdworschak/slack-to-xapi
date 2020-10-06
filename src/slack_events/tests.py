@@ -45,13 +45,15 @@ class SlackEventUnitTest(TestCase):
             created_by=self.user,
             slack_event_field='event_type',
             expected_value='message',
-            xapi_verb=self.verb
+            xapi_verb=self.verb,
+            field_group='sent_message'
         )
         SlackObjectField.objects.create(
             created_by=self.user,
             slack_event_field='event_type',
             expected_value='message',
-            xapi_object=self.x_object
+            xapi_object=self.x_object,
+            field_group='sent_message'
         )
 
     def test_slack_event_to_xapi_statement(self):

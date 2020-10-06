@@ -61,35 +61,90 @@ class XApiConversionUnitTest(TestCase):
             extensions=json.dumps(['event_id', 'message_text', 'team_id'])
         )
         self.xapi_object2.save()
+        self.xapi_object3 = XApiObject(
+            created_by=self.user,
+            iri='http://example.com/activities/file',
+            display_name="File",
+            language="en-US",
+            extensions=json.dumps(['event_id', 'team_id'])
+        )
+        self.xapi_object3.save()
         SlackVerbField.objects.create(
             created_by=self.user,
             slack_event_field='event_type',
             expected_value='message',
-            xapi_verb=self.xapi_verb
+            xapi_verb=self.xapi_verb,
+            field_group='sent_message'
         )
         SlackVerbField.objects.create(
             created_by=self.user,
             slack_event_field='event_subtype',
             expected_value='None',
-            xapi_verb=self.xapi_verb
+            xapi_verb=self.xapi_verb,
+            field_group='sent_message'
         )
         SlackObjectField.objects.create(
             created_by=self.user,
             slack_event_field='event_type',
             expected_value='message',
-            xapi_object=self.xapi_object
+            xapi_object=self.xapi_object,
+            field_group='sent_message'
+        )
+        SlackObjectField.objects.create(
+            created_by=self.user,
+            slack_event_field='event_subtype',
+            expected_value='None',
+            xapi_object=self.xapi_object,
+            field_group='sent_message'
         )
         SlackObjectField.objects.create(
             created_by=self.user,
             slack_event_field='event_type',
             expected_value='reaction_added',
-            xapi_object=self.xapi_object2
+            xapi_object=self.xapi_object2,
+            field_group='reaction_added'
         )
         SlackObjectField.objects.create(
             created_by=self.user,
             slack_event_field='event_subtype',
             expected_value='message',
-            xapi_object=self.xapi_object2
+            xapi_object=self.xapi_object2,
+            field_group='sent_message'
+        )
+        SlackObjectField.objects.create(
+            created_by=self.user,
+            slack_event_field='event_type',
+            expected_value='message',
+            xapi_object=self.xapi_object,
+            field_group='message_changed'
+        )
+        SlackObjectField.objects.create(
+            created_by=self.user,
+            slack_event_field='event_subtype',
+            expected_value='message_changed',
+            xapi_object=self.xapi_object,
+            field_group='message_changed'
+        )
+        SlackObjectField.objects.create(
+            created_by=self.user,
+            slack_event_field='event_type',
+            expected_value='file_public',
+            xapi_object=self.xapi_object3,
+            field_group='file_public'
+        )
+        SlackObjectField.objects.create(
+            created_by=self.user,
+            slack_event_field='event_type',
+            expected_value='file_created',
+            xapi_object=self.xapi_object3,
+            field_group='file_created'
+        )
+        SlackObjectField.objects.create(
+            created_by=self.user,
+            slack_event_field='event_type',
+            expected_value='file_shared',
+            xapi_object=self.xapi_object3,
+            field_group='file_shared'
         )
 
     def test_slack_id_to_xapi_actor(self):
@@ -149,6 +204,10 @@ class XApiConversionUnitTest(TestCase):
         xapi_verb = XApiVerb.slack_event_to_xapi_verb(slack_event)
         self.assertTrue(isinstance(xapi_verb, dict))
         self.assertEquals(xapi_verb, expected)
+
+    def test_object_fields_to_dict(self):
+        object_fields = self.xapi_object.object_fields_to_dict()
+        self.assertTrue(object_fields)
 
     def test_model_to_xapi_object(self):
         with open('data/slack_event_tests.json') as file:
@@ -212,3 +271,14 @@ class XApiConversionUnitTest(TestCase):
         slack_event.save()
         self.assertTrue(isinstance(slack_event.slack_event_to_xapi_statement(),
                                    dict))
+
+    def test_model_to_xapi_object_file_objects(self):
+        with open('/app/data/example.json', 'r') as file:
+            events = json.load(file)
+        for payload in events:
+            slack_event = SlackEvent(_payload=payload)
+            slack_event.save()
+
+        slack_events = SlackEvent.objects.all()
+        for se in slack_events:
+            obj = XApiObject.slack_event_to_xapi_object(se)
