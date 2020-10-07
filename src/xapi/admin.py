@@ -86,7 +86,7 @@ class XApiObjectAdmin(admin.ModelAdmin):
         (None, {'fields': [
             ('iri',), ('display_name',), ('language',), ('description',),
             ('activity_type',), ('more_info',), ('object_type',),
-            ('extensions',)]
+            ('extensions',), ('id_field',)]
             }),
     ]
 

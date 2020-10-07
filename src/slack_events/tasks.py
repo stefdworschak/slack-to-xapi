@@ -12,7 +12,7 @@ log = logging.getLogger(__name__)
 
 @shared_task
 def schedule_xapi_task(payload):
-    """ Handle Slack Events Subscription Payload to xAPI conversion and 
+    """ Handle Slack Events Subscription Payload to xAPI conversion and
     delivery to one (or multiple) LRS """
     slack_event = SlackEvent(_payload=json.dumps(payload))
     slack_event.save()

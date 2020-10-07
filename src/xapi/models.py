@@ -144,14 +144,23 @@ class XApiObject(models.Model):
                                       '(e.g. ["message_text", "event_id"]. '
                                       'The available Extensions can be '
                                       'configured in xapi/models.py'))
+    id_field = models.CharField(max_length=20, default='event_id')
 
     def __str__(self):
         return f'{self.display_name} ({self.language})'
 
     def model_to_xapi_object(self, event):
+        if not self.iri[-1] == '\/':
+            self.iri = self.iri + '/'
+
+        if self.id_field == 'file_ids':
+            _id = event.file_ids[0]
+        else:
+            _id = getattr(event, self.id_field) or event.event_id
+
         xapi_object = {
                 "object": {
-                    "id": self.iri,
+                    "id": f'{self.iri}{_id}',
                     "definition": {
                         "name": {
                             self.language: self.display_name
@@ -193,7 +202,6 @@ class XApiObject(models.Model):
                     or field.expected_value == 'False'):
                 expected_value = field.expected_value == 'True'
             object_dict[field.field_group][field.slack_event_field] = expected_value  # noqa: E501
-        print(object_dict)
         if not object_dict:
             return None
         return object_dict
@@ -212,12 +220,11 @@ class XApiObject(models.Model):
                 del event['mentioned_users']
             if 'attachments' in event:
                 del event['attachments']
+            if 'file_ids' in event:
+                del event['file_ids']
             for fields in object_fieldset.values():
                 object_set = set(fields.items())
                 if object_set.issubset(set(slack_event.__dict__.items())):
-                    print("Object Set: ", json.dumps(dict(object_set), default=str))
-                    print("Event Fields: ", json.dumps(dict(set(slack_event.__dict__.items())), default=str))
-                    print("Object: ", xobject.display_name)
                     return xobject.model_to_xapi_object(slack_event)
         return
 
@@ -278,6 +285,8 @@ class XApiVerb(models.Model):
                 del event['mentioned_users']
             if 'attachments' in event:
                 del event['attachments']
+            if 'file_ids' in event:
+                del event['file_ids']
             for fields in verb_fieldset.values():
                 verb_set = set(fields.items())
                 if verb_set.issubset(set(slack_event.__dict__.items())):
