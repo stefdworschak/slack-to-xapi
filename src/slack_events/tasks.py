@@ -11,6 +11,7 @@ from xapi.models import LrsConfig
 log = logging.getLogger(__name__)
 RETRIES = 6
 RETRY_INTERVAL = 10
+TIMEOUT=3
 
 
 @shared_task
@@ -46,7 +47,8 @@ def send_xapi_statement_to_lrs(lrs_config, xapi_statement, slack_event):
                                 data=json.dumps(xapi_statement, default=str),
                                 auth=(lrs_config.lrs_auth_user,
                                     lrs_config.lrs_auth_pw),
-                                headers=headers)
+                                headers=headers,
+                                timeout=TIMEOUT)
             if res.status_code == 200:
                 break
 
