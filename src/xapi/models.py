@@ -1,6 +1,7 @@
 import json
 
 from django.db import models
+from django.conf import settings
 from django.contrib.auth.models import User
 
 from jsonfield import JSONField
@@ -187,6 +188,11 @@ class XApiObject(models.Model):
                 extension_key = EXTENSIONS.get(extension)
                 extension_value = getattr(event, extension)
                 xapi_object['object']['definition']['extensions'][extension_key] = extension_value  # noqa: E501
+
+        if settings.ENABLE_PERMALINKS and event.permalink:
+            xapi_object['object']['definition'].setdefault('extensions', {})
+            xapi_object['object']['definition']['extensions'][
+                'http://example.com/extensions/'] = event.permalink
         return xapi_object
 
     def object_fields_to_dict(self):
