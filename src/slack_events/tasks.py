@@ -2,17 +2,21 @@
 import json
 import logging
 import requests
+import time
 
 from celery import shared_task
 from slack_events.models import SlackEvent, XApiStatement
 from xapi.models import LrsConfig
 
 log = logging.getLogger(__name__)
+RETRIES = 6
+RETRY_INTERVAL = 10
+TIMEOUT=3
 
 
 @shared_task
 def schedule_xapi_task(payload):
-    """ Handle Slack Events Subscription Payload to xAPI conversion and 
+    """ Handle Slack Events Subscription Payload to xAPI conversion and
     delivery to one (or multiple) LRS """
     slack_event = SlackEvent(_payload=json.dumps(payload))
     slack_event.save()
@@ -37,16 +41,33 @@ def send_xapi_statement_to_lrs(lrs_config, xapi_statement, slack_event):
     """ Sends an xAPI statement to an LRS """
     headers = {'Content-type': 'application/json;charset=UTF-8',
                'x-experience-api-version': '1.0.1'}
-    res = requests.post(lrs_config.lrs_endpoint,
-                        data=json.dumps(xapi_statement, default=str),
-                        auth=(lrs_config.lrs_auth_user,
-                              lrs_config.lrs_auth_pw),
-                        headers=headers)
-    if res.status_code != 200:
-        log.exception(res.content)
-        return
+    for retry in range(1, RETRIES+1):
+        try:
+            res = requests.post(lrs_config.lrs_endpoint,
+                                data=json.dumps(xapi_statement, default=str),
+                                auth=(lrs_config.lrs_auth_user,
+                                    lrs_config.lrs_auth_pw),
+                                headers=headers,
+                                timeout=TIMEOUT)
+            if res.status_code == 200:
+                break
+
+            if retry == RETRIES:
+                log.exception(f'Max retries exceeded. Reason: {res.reason}')
+                return
+
+        except requests.exceptions.ConnectionError as connection_error:
+            if retry == RETRIES:
+                log.exception(
+                    f'Max retries exceeded. Reason: {str(connection_error)}')
+                return
+
+        log.exception(
+            f'Error sending xAPI statement to {lrs_config.lrs_endpoint}. '
+            f'{retry} out of {RETRIES} tries.')
+
     xapi_statement = XApiStatement.objects.filter(slack_event=slack_event)
     if xapi_statement:
         xapi_statement.update(delivered=True)
-    log.info("Successfully sent xAPI statement to LRS")
+    log.info(f'Successfully sent xAPI statement to {lrs_config.lrs_endpoint}')
     return

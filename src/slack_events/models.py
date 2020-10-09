@@ -15,8 +15,11 @@ from slack import WebClient
 from xapi.models import XApiActor, XApiVerb, XApiObject
 from xapi.models import ACTOR_IRI_TYPES
 from main.helper import get_or_none, create_sha1
+from .helper import (get_file_permalink, get_channel_permalink,
+                     get_reaction_permalink, get_message_permalink,
+                     get_star_or_pin_permalink)
 
-logger = logging.getLogger(__name__)
+log = logging.getLogger(__name__)
 TZ = pytz.timezone('Europe/Dublin')
 SLACK_USER_API = ''
 slack_client = WebClient(token=settings.SLACK_OAUTH_TOKEN)
@@ -48,6 +51,8 @@ class SlackEvent(models.Model):
     mentioned_users = JSONField(null=True, blank=True)
     has_mentions = models.BooleanField(default=False)
     has_files = models.BooleanField(default=False)
+    permalink = models.CharField(max_length=1048, null=True, blank=True)
+    file_ids = JSONField(null=True, blank=True)
 
     _payload = JSONField(null=True, blank=True)
 
@@ -68,19 +73,24 @@ class SlackEvent(models.Model):
         self.api_type = data.get('type')
         self.event_id = data.get('event_id')
         self.event_time = self.from_unix_to_localtime(data.get('event_time'))
-        self.user_id = (event_content.get('user')
-                            or event_content.get('user_id'))
-
         self.event_type = event_content.get('type')
         self.event_subtype = event_content.get('subtype')
+        if event_content.get('type') == 'user_change':
+            self.user_id = event_content.get('user', {}).get('id')
+        else:
+            self.user_id = (event_content.get('user')
+                            or event_content.get('user_id')
+                            or data.get('authed_users')[0])
         self.message_text = event_content.get('text')
         self.channel = event_content.get('channel')
         self.channel_type = event_content.get('channel_type')
         self.attachments = event_content.get('attachments')
+        message_ts = (event_content.get('ts')
+                      or event_content.get('event_ts')
+                      or event_content.get('item', {}).get('event_ts')
+                      or event_content.get('message', {}).get('event_ts'))
         self.ts = self.from_unix_to_localtime(
-            timestamp=(event_content.get('ts')
-                       or event_content.get('event_ts')),
-            tz=TZ)
+            timestamp=message_ts, tz=TZ)
 
         # If event has a message, then take these values
         if event_content.get('message'):
@@ -97,8 +107,18 @@ class SlackEvent(models.Model):
         self.has_files = bool(
             event_content.get('files') or event_content.get('file') or
             event_content.get('attachment', {}).get('files') or
-            event_content.get('item', {}).get('message', {}).get('items'))
+            event_content.get('item', {}).get('message', {}).get('items')
+            or event_content.get('file_id'))
 
+        if event_content.get('files'):
+            self.file_ids = [shared_file.get('id')
+                             for shared_file in event_content.get('files')]
+        else:
+            file_id = (event_content.get('file_id') or
+                       event_content.get('file', {}).get('id'))
+            self.file_ids = [file_id]
+
+        self.permalink = self.get_permalink_from_slack()
         self.mentioned_users = self.get_mentions_from_message(self.message_text)  # noqa: E501
         if self.mentioned_users:
             self.has_mentions = True
@@ -139,19 +159,16 @@ class SlackEvent(models.Model):
         # If no actor is found and a new one cannot be created return None
         if not xapi_actor:
             return None
-        logger.info("actor exsist")
         xapi_statement.update(xapi_actor)
         xapi_verb = XApiVerb.slack_event_to_xapi_verb(self)
         # If no matching verb was found return None
         if not xapi_verb:
             return None
-        logger.info("verb exsist")
         xapi_statement.update(xapi_verb)
         xapi_object = XApiObject.slack_event_to_xapi_object(self)
         # If no matching object was found return None
         if not xapi_object:
             return None
-        logger.info("object exsist")
         xapi_statement.update(xapi_object)
         statement = XApiStatement(
             statement=json.dumps(xapi_statement, default=str),
@@ -163,7 +180,7 @@ class SlackEvent(models.Model):
         """ Check if Actor exists and try to create it by looking up the info
         from their Slack profile if feature is enabled """
         if not settings.ACTOR_CREATION_ENABLED:
-            logger.warning("Automatic actor creation not enabled")
+            log.warning("Automatic actor creation not enabled")
             return
 
         existing_actor = get_or_none(XApiActor, slack_user_id=self.user_id)
@@ -172,7 +189,7 @@ class SlackEvent(models.Model):
 
         admin_user = get_or_none(User, username='admin')
         if not admin_user:
-            logger.warning("Admin user for automatic actor creation not found")
+            log.warning("Admin user for automatic actor creation not found")
             return
 
         slack_call = slack_client.users_info(user=self.user_id)
@@ -182,11 +199,11 @@ class SlackEvent(models.Model):
         user_data = slack_call.get('user')
         email = user_data.get('profile', {}).get('email')
         if not email:
-            logger.warning("No email in Slack user found")
+            log.warning("No email in Slack user found")
             return
 
         if settings.ACTOR_IRI_TYPE not in [t[0] for t in ACTOR_IRI_TYPES]:
-            logger.warning("Iri type declared is invalid")
+            log.warning("Iri type declared is invalid")
             return
 
         if settings.ACTOR_IRI_TYPE == 'mbox_sha1sum':
@@ -203,6 +220,34 @@ class SlackEvent(models.Model):
         )
         actor.save()
         return get_or_none(XApiActor, slack_user_id=self.user_id)
+
+    def get_permalink_from_slack(self):
+        """ Gets the permalink for the message, file or conversation through
+        the Slack API """
+        if not settings.ENABLE_PERMALINKS:
+            log.info("Permalinks are not enabled.")
+            return None
+
+        if self.permalink:
+            log.info("Permalink already exists.")
+            return self.permalink
+
+        if 'deleted' in self.event_type:
+            return
+
+        if (self.event_type == 'member_joined_channel' or
+                self.event_type == 'member_left_channel'):
+            return get_channel_permalink(self)
+        elif ('file' in self.event_type
+              and self.event_type != 'file_share'
+              and self.has_files):
+            return get_file_permalink(self)
+        elif self.event_type == 'reaction_added':
+            return get_reaction_permalink(self)
+        elif self.event_type == 'star_added' or self.event_type == 'pin_added':
+            return get_star_or_pin_permalink(self)
+        else:
+            return get_message_permalink(self)
 
 
 class XApiStatement(models.Model):

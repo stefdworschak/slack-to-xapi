@@ -70,7 +70,7 @@ class SlackEventUnitTest(TestCase):
                     }
             },
             'object': {
-                'id': 'http://example.com/activities/message',
+                'id': 'http://example.com/activities/message/Ev01AMJETER4',
                 'definition': {
                     'name': {
                         'en-US': 'Chat Message'

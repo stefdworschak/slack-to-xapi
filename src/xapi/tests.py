@@ -217,7 +217,7 @@ class XApiConversionUnitTest(TestCase):
 
         expected = {
             "object": {
-                "id": "http://example.com/activities/message",
+                "id": "http://example.com/activities/message/Ev01AMJETER4",
                 "definition": {
                     "name": {
                         "en-US": "Message"
@@ -238,7 +238,7 @@ class XApiConversionUnitTest(TestCase):
 
         expected = {
             "object": {
-                "id": "http://example.com/activities/reaction",
+                "id": "http://example.com/activities/reaction/Ev01BMNX530V",
                 "definition": {
                     "name": {
                         "en-US": "Reaction"
@@ -271,14 +271,3 @@ class XApiConversionUnitTest(TestCase):
         slack_event.save()
         self.assertTrue(isinstance(slack_event.slack_event_to_xapi_statement(),
                                    dict))
-
-    def test_model_to_xapi_object_file_objects(self):
-        with open('/app/data/example.json', 'r') as file:
-            events = json.load(file)
-        for payload in events:
-            slack_event = SlackEvent(_payload=payload)
-            slack_event.save()
-
-        slack_events = SlackEvent.objects.all()
-        for se in slack_events:
-            obj = XApiObject.slack_event_to_xapi_object(se)
