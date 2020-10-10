@@ -1,5 +1,23 @@
 [
     {
+        "model": "auth.user",
+        "pk": 1,
+        "fields": {
+            "password": "pbkdf2_sha256$216000$9INg5Wb8GDxn$biGKQsgr+PUCf9Rv/FK/A3FwuYQhQuAy+WqabpJrk0U=",
+            "last_login": "2020-10-10T12:48:43.958Z",
+            "is_superuser": true,
+            "username": "admin",
+            "first_name": "",
+            "last_name": "",
+            "email": "admin@example.com",
+            "is_staff": true,
+            "is_active": true,
+            "date_joined": "2020-09-23T21:23:49.913Z",
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
         "model": "xapi.slackobjectfield",
         "pk": 3,
         "fields": {
