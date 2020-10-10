@@ -26,20 +26,24 @@ Main system requirements:
 mkdir data
 touch data/db.sqlite3
 ```
-3) Bring the docker containers up using `docker-compose`
+3) Build the docker image
+```
+docker build . -t slack-to-xapi
+```
+4) Bring the docker containers up using `docker-compose`
 ```
 docker-compose up -d
 ```
-4) Run the migrations and see the xAPI fixtures
+5) Run the migrations and see the xAPI fixtures
 ```
 scripts/setup.sh
 ```
-5) Use ngrok to create a publicly accessible URL
+6) Use ngrok to create a publicly accessible URL
 ``` 
 sudo apt install ngrok
 ngrok http 80
 ```
-6) Access start page via localhost
+7) Access start page via localhost
 
 ## For Production Setup
 
