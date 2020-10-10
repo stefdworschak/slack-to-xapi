@@ -12,7 +12,7 @@ log = logging.getLogger(__name__)
 
 
 @csrf_exempt
-def slack_api(request):
+def slack_xapi(request):
     """ Slack Events API interface """
     if not request.body:
         return JsonResponse({'ok': False})

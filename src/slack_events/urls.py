@@ -1,7 +1,7 @@
 from django.urls import path
-from .views import slack_api, statement_manager
+from .views import slack_xapi, statement_manager
 
 urlpatterns = [
-    path('slack_api/', slack_api, name="slack_api"),
+    path('slack/', slack_xapi, name="xapi_slack"),
     path('statement_manager/', statement_manager, name="statement_manager"),
 ]

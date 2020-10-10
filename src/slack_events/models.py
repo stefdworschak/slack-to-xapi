@@ -80,7 +80,7 @@ class SlackEvent(models.Model):
         else:
             self.user_id = (event_content.get('user')
                             or event_content.get('user_id')
-                            or data.get('authed_users')[0])
+                            or data.get('authorizations')[0].get('user_id'))
         self.message_text = event_content.get('text')
         self.channel = event_content.get('channel')
         self.channel_type = event_content.get('channel_type')
