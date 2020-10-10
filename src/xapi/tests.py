@@ -1,6 +1,6 @@
 import json
 
-from django.test import TestCase
+from django.test import TestCase, override_settings
 
 from xapi.models import (XApiActor, XApiVerb, XApiObject, SlackVerbField,
                          SlackObjectField)
@@ -11,7 +11,9 @@ TEST_USERNAME = 'user@example.com'
 TEST_USER_PASSWORD = 'fakepassword'
 
 
+@override_settings(ENABLE_PERMALINKS=False)
 class XApiConversionUnitTest(TestCase):
+    maxDiff = None
     def setUp(self):
         self.user = User.objects.create(username=TEST_USERNAME,
                                         password=TEST_USER_PASSWORD)

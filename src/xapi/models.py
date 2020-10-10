@@ -198,7 +198,7 @@ class XApiObject(models.Model):
         if settings.ENABLE_PERMALINKS and event.permalink:
             xapi_object['object']['definition'].setdefault('extensions', {})
             xapi_object['object']['definition']['extensions'][
-                'http://example.com/extensions/'] = event.permalink
+                'http://example.com/extensions/permalink'] = event.permalink
         return xapi_object
 
     def object_fields_to_dict(self):
