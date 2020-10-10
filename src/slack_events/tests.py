@@ -80,7 +80,7 @@ class SlackEventUnitTest(TestCase):
                 'objectType': 'Activity'
             }
         }
-        with open('data/slack_event_tests.json') as file:
+        with open('slack_events/test_data/slack_event_tests.json') as file:
             slack_event_payloads = json.load(file)
 
         slack_event = SlackEvent(_payload=json.dumps(slack_event_payloads[0]))
@@ -97,7 +97,7 @@ class SlackEventUnitTest(TestCase):
                                password=TEST_USER_PASSWORD)
         self.admin_user.save()
 
-        with open('data/slack_event_tests.json') as file:
+        with open('slack_events/test_data/slack_event_tests.json') as file:
             slack_event_payloads = json.load(file)
             slack_event_payloads[0]['event']['user'] = REAL_USER_ID
 

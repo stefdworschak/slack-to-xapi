@@ -51,6 +51,7 @@ class SlackEvent(models.Model):
     mentioned_users = JSONField(null=True, blank=True)
     has_mentions = models.BooleanField(default=False)
     has_files = models.BooleanField(default=False)
+    has_attachments = models.BooleanField(default=False)
     permalink = models.CharField(max_length=1048, null=True, blank=True)
     file_ids = JSONField(null=True, blank=True)
 
@@ -85,6 +86,8 @@ class SlackEvent(models.Model):
         self.channel = event_content.get('channel')
         self.channel_type = event_content.get('channel_type')
         self.attachments = event_content.get('attachments')
+        if event_content.get('attachments'):
+            self.has_attachments = True
         message_ts = (event_content.get('ts')
                       or event_content.get('event_ts')
                       or event_content.get('item', {}).get('event_ts')

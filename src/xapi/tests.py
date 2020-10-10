@@ -14,6 +14,7 @@ TEST_USER_PASSWORD = 'fakepassword'
 @override_settings(ENABLE_PERMALINKS=False)
 class XApiConversionUnitTest(TestCase):
     maxDiff = None
+
     def setUp(self):
         self.user = User.objects.create(username=TEST_USERNAME,
                                         password=TEST_USER_PASSWORD)
@@ -150,7 +151,7 @@ class XApiConversionUnitTest(TestCase):
         )
 
     def test_slack_id_to_xapi_actor(self):
-        with open('data/slack_event_tests.json') as file:
+        with open('slack_events/test_data/slack_event_tests.json') as file:
             slack_event_payloads = json.load(file)
         slack_event = SlackEvent(_payload=json.dumps(slack_event_payloads[0]))
         slack_event.save()
@@ -168,7 +169,7 @@ class XApiConversionUnitTest(TestCase):
         self.assertEquals(xapi_actor, expected)
 
     def test_slack_id_to_xapi_actor_with_account(self):
-        with open('data/slack_event_tests.json') as file:
+        with open('slack_events/test_data/slack_event_tests.json') as file:
             slack_event_payloads = json.load(file)
         slack_event = SlackEvent(_payload=json.dumps(slack_event_payloads[2]))
         slack_event.save()
@@ -189,7 +190,7 @@ class XApiConversionUnitTest(TestCase):
         self.assertEquals(xapi_actor, expected)
 
     def test_slack_event_to_xapi_verb(self):
-        with open('data/slack_event_tests.json') as file:
+        with open('slack_events/test_data/slack_event_tests.json') as file:
             slack_event_payloads = json.load(file)
         slack_event = SlackEvent(_payload=json.dumps(slack_event_payloads[0]))
         slack_event.save()
@@ -212,7 +213,7 @@ class XApiConversionUnitTest(TestCase):
         self.assertTrue(object_fields)
 
     def test_model_to_xapi_object(self):
-        with open('data/slack_event_tests.json') as file:
+        with open('slack_events/test_data/slack_event_tests.json') as file:
             slack_event_payloads = json.load(file)
         slack_event = SlackEvent(_payload=json.dumps(slack_event_payloads[0]))
         slack_event.save()
@@ -232,7 +233,7 @@ class XApiConversionUnitTest(TestCase):
                           expected)
 
     def test_model_to_xapi_object_with_extensions(self):
-        with open('data/slack_event_tests.json') as file:
+        with open('slack_events/test_data/slack_event_tests.json') as file:
             slack_event_payloads = json.load(file)
 
         slack_event = SlackEvent(_payload=json.dumps(slack_event_payloads[1]))
@@ -259,7 +260,7 @@ class XApiConversionUnitTest(TestCase):
                           expected)
 
     def test_slack_event_to_xapi_object(self):
-        with open('data/slack_event_tests.json') as file:
+        with open('slack_events/test_data/slack_event_tests.json') as file:
             slack_event_payloads = json.load(file)
         slack_event = SlackEvent(_payload=json.dumps(slack_event_payloads[1]))
         slack_event.save()
@@ -267,7 +268,7 @@ class XApiConversionUnitTest(TestCase):
         self.assertTrue(isinstance(xapi_verb, dict))
 
     def test_slack_event_to_xapi_statement(self):
-        with open('data/slack_event_tests.json') as file:
+        with open('slack_events/test_data/slack_event_tests.json') as file:
             slack_event_payloads = json.load(file)
         slack_event = SlackEvent(_payload=json.dumps(slack_event_payloads[0]))
         slack_event.save()

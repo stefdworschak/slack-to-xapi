@@ -1,0 +1,243 @@
+[
+    {
+    "token": "oCVgtlUSc75hs77OcMFXwcqE",
+    "team_id": "T01AV5ATPA8",
+    "api_app_id": "A01BCQKEKFS",
+    "event": {
+        "client_msg_id": "2c82c524-1979-48d2-a027-a29613a51db8",
+        "type": "message",
+        "text": "Testing the events api",
+        "user": "U123456",
+        "ts": "1600285641.000300",
+        "team": "T01AV5ATPA8",
+        "blocks": [
+            {
+                "type": "rich_text",
+                "block_id": "Ouh",
+                "elements": [
+                    {
+                        "type": "rich_text_section",
+                        "elements": [
+                            {
+                                "type": "text",
+                                "text": "Testing the events api"
+                            }
+                        ]
+                    }
+                ]
+            }
+        ],
+        "channel": "C01BCQGKR5E",
+        "event_ts": "1600285641.000300",
+        "channel_type": "channel"
+    },
+    "type": "event_callback",
+    "event_id": "Ev01AMJETER4",
+    "event_time": 1600285641,
+    "authed_users": [
+        "U123456"
+    ],
+    "authorizations": [{
+        "user_id": "U123456"
+    }]
+    },
+    {
+        "token": "oCVgtlUSc75hs77OcMFXwcqE",
+        "team_id": "T01AV5ATPA8",
+        "api_app_id": "A01BCQKEKFS",
+        "event": {
+            "type": "reaction_added",
+            "user": "U01AP5SU5QB",
+            "item": {
+                "type": "message",
+                "channel": "C01AG7LP57G",
+                "ts": "1601500903.000300"
+            },
+            "reaction": "+1",
+            "item_user": "U01AP5SU5QB",
+            "event_ts": "1601501093.000400"
+        },
+        "type": "event_callback",
+        "event_id": "Ev01BMNX530V",
+        "event_time": 1601501093,
+        "authed_users": [
+            "U01AP5SU5QB"
+        ],
+        "authorizations": [{
+            "user_id": "U01AP5SU5QB"
+        }],
+        "event_context": "1-reaction_added-T01AV5ATPA8-C01AG7LP57G"
+    },
+    {
+        "token": "oCVgtlUSc75hs77OcMFXwcqE",
+        "team_id": "T01AV5ATPA8",
+        "api_app_id": "A01BCQKEKFS",
+        "event": {
+            "type": "message",
+            "subtype": "message_changed",
+            "hidden": true,
+            "message": {
+                "bot_id": "B01",
+                "type": "message",
+                "text": "You asked me to remind you about <https://slack-to-xapi.slack.com/archives/G01AP721DS7/p1600285828000200|this message> from you in test-events.",
+                "user": "U9876543",
+                "team": "T01AV5ATPA8",
+                "edited": {
+                    "user": "B01",
+                    "ts": "1600302331.000000"
+                },
+                "attachments": [
+                    {
+                        "callback_id": "reminders_snooze_1368993841427",
+                        "fallback": "Snooze",
+                        "id": 1,
+                        "actions": [
+                            {
+                                "id": "1",
+                                "name": "complete",
+                                "text": "Mark as Complete",
+                                "type": "button",
+                                "value": "1368993841427",
+                                "style": "primary"
+                            },
+                            {
+                                "id": "2",
+                                "name": "delete",
+                                "text": "Delete",
+                                "type": "button",
+                                "value": "1368993841427",
+                                "style": ""
+                            },
+                            {
+                                "id": "3",
+                                "name": "snooze_action_menu",
+                                "text": "Snooze",
+                                "type": "select",
+                                "data_source": "static",
+                                "options": [
+                                    {
+                                        "text": "20 minutes",
+                                        "value": "20"
+                                    },
+                                    {
+                                        "text": "1 hour",
+                                        "value": "60"
+                                    },
+                                    {
+                                        "text": "3 hours",
+                                        "value": "180"
+                                    },
+                                    {
+                                        "text": "Tomorrow at 9 AM",
+                                        "value": "tomorrow"
+                                    },
+                                    {
+                                        "text": "Next week",
+                                        "value": "monday"
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    {
+                        "from_url": "https://slack-to-xapi.slack.com/archives/G01AP721DS7/p1600285828000200",
+                        "fallback": "[September 16th, 2020 12:50 PM] stef.dworschak: Testing events api!",
+                        "ts": "1600285828.000200",
+                        "author_id": "U123456",
+                        "author_subname": "Stefan",
+                        "channel_id": "G01AP721DS7",
+                        "channel_name": "test-events",
+                        "is_msg_unfurl": true,
+                        "text": "Testing events api!",
+                        "author_name": "Stefan",
+                        "author_link": "https://slack-to-xapi.slack.com/team/U123456",
+                        "author_icon": "https://secure.gravatar.com/avatar/81c5aaac2d94e7cc146e9211a074c63c.jpg?s=48&d=https%3A%2F%2Fa.slack-edge.com%2Fdf10d%2Fimg%2Favatars%2Fava_0002-48.png",
+                        "mrkdwn_in": [
+                            "text"
+                        ],
+                        "id": 2,
+                        "original_url": "https://slack-to-xapi.slack.com/archives/G01AP721DS7/p1600285828000200",
+                        "footer": "Posted in #test-events"
+                    }
+                ],
+                "ts": "1600302330.000100"
+            },
+            "channel": "D01A87C212T",
+            "previous_message": {
+                "bot_id": "B01",
+                "type": "message",
+                "text": "You asked me to remind you about <https://slack-to-xapi.slack.com/archives/G01AP721DS7/p1600285828000200|this message> from you in test-events.",
+                "user": "USLACKBOT",
+                "ts": "1600302330.000100",
+                "team": "T01AV5ATPA8",
+                "attachments": [
+                    {
+                        "callback_id": "reminders_snooze_1368993841427",
+                        "fallback": "Snooze",
+                        "id": 1,
+                        "actions": [
+                            {
+                                "id": "1",
+                                "name": "complete",
+                                "text": "Mark as Complete",
+                                "type": "button",
+                                "value": "1368993841427",
+                                "style": "primary"
+                            },
+                            {
+                                "id": "2",
+                                "name": "delete",
+                                "text": "Delete",
+                                "type": "button",
+                                "value": "1368993841427",
+                                "style": ""
+                            },
+                            {
+                                "id": "3",
+                                "name": "snooze_action_menu",
+                                "text": "Snooze",
+                                "type": "select",
+                                "data_source": "static",
+                                "options": [
+                                    {
+                                        "text": "20 minutes",
+                                        "value": "20"
+                                    },
+                                    {
+                                        "text": "1 hour",
+                                        "value": "60"
+                                    },
+                                    {
+                                        "text": "3 hours",
+                                        "value": "180"
+                                    },
+                                    {
+                                        "text": "Tomorrow at 9 AM",
+                                        "value": "tomorrow"
+                                    },
+                                    {
+                                        "text": "Next week",
+                                        "value": "monday"
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            },
+            "event_ts": "1600302331.000200",
+            "ts": "1600302331.000200",
+            "channel_type": "im"
+        },
+        "type": "event_callback",
+        "event_id": "Ev01AURGMDL2",
+        "event_time": 1600302331,
+        "authed_users": [
+            "U123456"
+        ],
+        "authorizations": [{
+            "user_id": "U123456"
+        }]
+    }
+]
+
