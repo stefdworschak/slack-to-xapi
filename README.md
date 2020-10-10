@@ -76,13 +76,13 @@ ngrok http 80
     - If the link to the endpoint is not correct or does for some reason not successfully return the authentication challenge, it will show an error message
 ![Event Subscriptions Link](https://github.com/stefdworschak/slack-to-xapi/blob/master/misc/img/event_subscription_link_error.png?raw=true)
 5) Add whatever events you want to save xAPI statements for (both user and/or bot)
-    - Most (if not all) of these events should already have been seeded in the previous setup steps
+    - Configurations for most (if not all) of these events should already have been seeded in the previous setup steps
 ![Event Subscriptions](https://github.com/stefdworschak/slack-to-xapi/blob/master/misc/img/event_subscriptions_subscriptions.png?raw=true)
 6) Add extra OAuth permissions if required
-    - If you actors to be created automatically, you will need to enable `users:read.email` as well
-7) (Re-)install your App and accept giving the app the requested permissions
+    - If you want actors to be created automatically, you will need to enable `users:read.email` as well
+7) (Re-) Install your App and accept giving the app the requested permissions
 ![Oauth](https://github.com/stefdworschak/slack-to-xapi/blob/master/misc/img/oauth.png?raw=true)
-8) Copy the **OAuth Access Token** to you `.env` file
+8) Add the **OAuth Access Token** as `SLACK_OAUTH_TOKEN` to your `.env` file 
 
 ## Available Configurations
 
@@ -185,7 +185,7 @@ You can also manually create Actors with OpenID on the Django admin console.
 | message | channel_purpose | set description for | Slack Conversation |
 | message | channel_archive | changed | Slack Conversation |
 
-### Special types: 
+### Special types (currently not covered): 
 | Slack Event Type | Slack Event SubType | Verb | Object | Extra Slack Event Attr |
 | --- | --- | --- | --- | ---| 
 | message | None | shared | Slack Message | attachments != None |
