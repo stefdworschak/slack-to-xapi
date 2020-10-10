@@ -151,17 +151,22 @@ class XApiObject(models.Model):
         return f'{self.display_name} ({self.language})'
 
     def model_to_xapi_object(self, event):
+        _id = ''
         if not self.iri[-1] == '\/':
             self.iri = self.iri + '/'
 
         if self.id_field == 'file_ids':
-            _id = event.file_ids[0]
+            _id = f'{self.iri}{event.file_ids[0]}'
         else:
-            _id = getattr(event, self.id_field) or event.event_id
+            _id = f'{self.iri}{getattr(event, self.id_field) or event.event_id}'
+
+        if settings.ENABLE_PERMALINKS and self.id_field == 'permalink':
+            if event.permalink:
+                _id = event.permalink
 
         xapi_object = {
                 "object": {
-                    "id": f'{self.iri}{_id}',
+                    "id": _id,
                     "definition": {
                         "name": {
                             self.language: self.display_name
@@ -170,6 +175,7 @@ class XApiObject(models.Model):
                     "objectType": self.object_type
                 }
             }
+
         if self.description:
             xapi_object['object']['definition']['description'] = {
                 self.language: self.description
@@ -359,9 +365,12 @@ class SlackObjectField(SlackField):
 
 
 class LrsConfig(models.Model):
-    lrs_endpoint = models.CharField(max_length=255, unique=True)
+    display_name = models.CharField(max_length=255, unique=True, null=True,
+                                    blank=True)
+    lrs_endpoint = models.CharField(max_length=255)
     lrs_auth_user = models.CharField(max_length=255)
     lrs_auth_pw = models.CharField(max_length=255)
+    is_active = models.BooleanField(default=True)
 
     def __str__(self):
-        return self.lrs_endpoint
+        return self.display_name

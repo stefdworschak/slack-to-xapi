@@ -16,7 +16,7 @@ Main system requirements:
 - Add `interaction_type` to Object
 - Add `group` to Actor and Object
 - Add logic for `mentions` (e.g. add extra xapi statement for a message that mentions other users)
-- Add OAuth as authentication method (currently only BasicAuth available)
+- Add OAuth or JWT as authentication method (currently only BasicAuth available)
 - Add sentiment analysis to analyse messages and reactions
 
 ## User Stories
@@ -31,6 +31,7 @@ Main system requirements:
 - Watershed (SaaS free account)
 - Veracity Learning (SaaS free account)
 - Learning Locker (self-hosted open-source version)
+- ADL LRS (self-hosted open-source version)
 
 ## System Architecture
 

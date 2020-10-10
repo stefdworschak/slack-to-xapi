@@ -1,4 +1,3 @@
-# Create your tasks here
 import json
 import logging
 import requests
@@ -39,6 +38,9 @@ def schedule_xapi_task(payload):
 
 def send_xapi_statement_to_lrs(lrs_config, xapi_statement, slack_event):
     """ Sends an xAPI statement to an LRS """
+    if not lrs_config.is_active:
+        return
+
     headers = {'Content-type': 'application/json;charset=UTF-8',
                'x-experience-api-version': '1.0.1'}
     for retry in range(1, RETRIES+1):

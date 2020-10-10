@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import (XApiObject, XApiActor, XApiVerb, SlackVerbField,
-                     SlackObjectField, LrsConfig)
+                     SlackObjectField, LrsConfig, SlackField)
 
 
 class SlackVerbFieldAdmin(admin.ModelAdmin):
@@ -99,8 +99,8 @@ class XApiObjectAdmin(admin.ModelAdmin):
 
 class LrsConfigAdmin(admin.ModelAdmin):
     model = LrsConfig
-    list_display = ('lrs_endpoint',)
-    list_filter = ('lrs_endpoint',)
+    list_display = ('display_name', 'lrs_endpoint',)
+    list_filter = ('display_name', 'lrs_endpoint',)
 
 
 admin.site.register(XApiObject, XApiObjectAdmin)
@@ -109,3 +109,4 @@ admin.site.register(XApiVerb, XApiVerbAdmin)
 admin.site.register(SlackVerbField, SlackVerbFieldAdmin)
 admin.site.register(SlackObjectField, SlackObjectFieldAdmin)
 admin.site.register(LrsConfig, LrsConfigAdmin)
+admin.site.register(SlackField)
