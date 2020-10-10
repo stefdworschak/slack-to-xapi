@@ -1,6 +1,5 @@
 [
     {
-    "token": "oCVgtlUSc75hs77OcMFXwcqE",
     "team_id": "T01AV5ATPA8",
     "api_app_id": "A01BCQKEKFS",
     "event": {
@@ -42,7 +41,6 @@
     }]
     },
     {
-        "token": "oCVgtlUSc75hs77OcMFXwcqE",
         "team_id": "T01AV5ATPA8",
         "api_app_id": "A01BCQKEKFS",
         "event": {
@@ -69,7 +67,6 @@
         "event_context": "1-reaction_added-T01AV5ATPA8-C01AG7LP57G"
     },
     {
-        "token": "oCVgtlUSc75hs77OcMFXwcqE",
         "team_id": "T01AV5ATPA8",
         "api_app_id": "A01BCQKEKFS",
         "event": {
