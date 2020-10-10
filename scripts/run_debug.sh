@@ -1,3 +1,6 @@
+#!/bin/bash
+cd "$(dirname "$(cd -P "$(dirname "${BASH_SOURCE[0]}")" && pwd)" )"  # cd into parent dir
+
 docker run --rm -it \
 -p "8000:8000" \
 --mount "type=bind,src=/home/stefan/Documents/slack-to-xapi/src/slack_events/,dst=/app/slack_events/" \

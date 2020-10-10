@@ -1,0 +1,1854 @@
+[
+    {
+        "model": "auth.user",
+        "pk": 1,
+        "fields": {
+            "password": "pbkdf2_sha256$216000$9INg5Wb8GDxn$biGKQsgr+PUCf9Rv/FK/A3FwuYQhQuAy+WqabpJrk0U=",
+            "last_login": "2020-10-10T12:48:43.958Z",
+            "is_superuser": true,
+            "username": "admin",
+            "first_name": "",
+            "last_name": "",
+            "email": "admin@example.com",
+            "is_staff": true,
+            "is_active": true,
+            "date_joined": "2020-09-23T21:23:49.913Z",
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "xapi.slackobjectfield",
+        "pk": 3,
+        "fields": {
+            "xapi_object": 1,
+            "field_group": "message_sent"
+        }
+    },
+    {
+        "model": "xapi.slackobjectfield",
+        "pk": 4,
+        "fields": {
+            "xapi_object": 1,
+            "field_group": "message_sent"
+        }
+    },
+    {
+        "model": "xapi.slackobjectfield",
+        "pk": 5,
+        "fields": {
+            "xapi_object": 1,
+            "field_group": "reacted_to_message"
+        }
+    },
+    {
+        "model": "xapi.slackobjectfield",
+        "pk": 6,
+        "fields": {
+            "xapi_object": 1,
+            "field_group": "reacted_to_message"
+        }
+    },
+    {
+        "model": "xapi.slackobjectfield",
+        "pk": 7,
+        "fields": {
+            "xapi_object": 1,
+            "field_group": "removed_reaction_from_message"
+        }
+    },
+    {
+        "model": "xapi.slackobjectfield",
+        "pk": 8,
+        "fields": {
+            "xapi_object": 1,
+            "field_group": "removed_reaction_from_message"
+        }
+    },
+    {
+        "model": "xapi.slackobjectfield",
+        "pk": 9,
+        "fields": {
+            "xapi_object": 3,
+            "field_group": "joined_conversation"
+        }
+    },
+    {
+        "model": "xapi.slackobjectfield",
+        "pk": 10,
+        "fields": {
+            "xapi_object": 3,
+            "field_group": "joined_conversation"
+        }
+    },
+    {
+        "model": "xapi.slackobjectfield",
+        "pk": 11,
+        "fields": {
+            "xapi_object": 3,
+            "field_group": "left_conversation"
+        }
+    },
+    {
+        "model": "xapi.slackobjectfield",
+        "pk": 12,
+        "fields": {
+            "xapi_object": 3,
+            "field_group": "left_conversation"
+        }
+    },
+    {
+        "model": "xapi.slackobjectfield",
+        "pk": 13,
+        "fields": {
+            "xapi_object": 1,
+            "field_group": "message_changed"
+        }
+    },
+    {
+        "model": "xapi.slackobjectfield",
+        "pk": 14,
+        "fields": {
+            "xapi_object": 1,
+            "field_group": "message_changed"
+        }
+    },
+    {
+        "model": "xapi.slackobjectfield",
+        "pk": 15,
+        "fields": {
+            "xapi_object": 1,
+            "field_group": "message_deleted"
+        }
+    },
+    {
+        "model": "xapi.slackobjectfield",
+        "pk": 16,
+        "fields": {
+            "xapi_object": 1,
+            "field_group": "message_deleted"
+        }
+    },
+    {
+        "model": "xapi.slackobjectfield",
+        "pk": 17,
+        "fields": {
+            "xapi_object": 4,
+            "field_group": "shared_file_message"
+        }
+    },
+    {
+        "model": "xapi.slackobjectfield",
+        "pk": 18,
+        "fields": {
+            "xapi_object": 4,
+            "field_group": "shared_file_message"
+        }
+    },
+    {
+        "model": "xapi.slackobjectfield",
+        "pk": 19,
+        "fields": {
+            "xapi_object": 4,
+            "field_group": "message_file"
+        }
+    },
+    {
+        "model": "xapi.slackobjectfield",
+        "pk": 20,
+        "fields": {
+            "xapi_object": 4,
+            "field_group": "message_file"
+        }
+    },
+    {
+        "model": "xapi.slackobjectfield",
+        "pk": 21,
+        "fields": {
+            "xapi_object": 1,
+            "field_group": "pin_message"
+        }
+    },
+    {
+        "model": "xapi.slackobjectfield",
+        "pk": 22,
+        "fields": {
+            "xapi_object": 1,
+            "field_group": "pin_message"
+        }
+    },
+    {
+        "model": "xapi.slackobjectfield",
+        "pk": 23,
+        "fields": {
+            "xapi_object": 4,
+            "field_group": "pin_file"
+        }
+    },
+    {
+        "model": "xapi.slackobjectfield",
+        "pk": 24,
+        "fields": {
+            "xapi_object": 4,
+            "field_group": "pin_file"
+        }
+    },
+    {
+        "model": "xapi.slackobjectfield",
+        "pk": 25,
+        "fields": {
+            "xapi_object": 1,
+            "field_group": "unpin_message"
+        }
+    },
+    {
+        "model": "xapi.slackobjectfield",
+        "pk": 26,
+        "fields": {
+            "xapi_object": 1,
+            "field_group": "unpin_message"
+        }
+    },
+    {
+        "model": "xapi.slackobjectfield",
+        "pk": 27,
+        "fields": {
+            "xapi_object": 4,
+            "field_group": "unpin_file"
+        }
+    },
+    {
+        "model": "xapi.slackobjectfield",
+        "pk": 28,
+        "fields": {
+            "xapi_object": 4,
+            "field_group": "unpin_file"
+        }
+    },
+    {
+        "model": "xapi.slackobjectfield",
+        "pk": 29,
+        "fields": {
+            "xapi_object": 1,
+            "field_group": "starred_message"
+        }
+    },
+    {
+        "model": "xapi.slackobjectfield",
+        "pk": 30,
+        "fields": {
+            "xapi_object": 1,
+            "field_group": "starred_message"
+        }
+    },
+    {
+        "model": "xapi.slackobjectfield",
+        "pk": 31,
+        "fields": {
+            "xapi_object": 4,
+            "field_group": "starred_file"
+        }
+    },
+    {
+        "model": "xapi.slackobjectfield",
+        "pk": 32,
+        "fields": {
+            "xapi_object": 4,
+            "field_group": "starred_file"
+        }
+    },
+    {
+        "model": "xapi.slackobjectfield",
+        "pk": 33,
+        "fields": {
+            "xapi_object": 1,
+            "field_group": "unstarred_message"
+        }
+    },
+    {
+        "model": "xapi.slackobjectfield",
+        "pk": 34,
+        "fields": {
+            "xapi_object": 1,
+            "field_group": "unstarred_message"
+        }
+    },
+    {
+        "model": "xapi.slackobjectfield",
+        "pk": 35,
+        "fields": {
+            "xapi_object": 4,
+            "field_group": "unstarred_file"
+        }
+    },
+    {
+        "model": "xapi.slackobjectfield",
+        "pk": 36,
+        "fields": {
+            "xapi_object": 4,
+            "field_group": "file_changed"
+        }
+    },
+    {
+        "model": "xapi.slackobjectfield",
+        "pk": 37,
+        "fields": {
+            "xapi_object": 4,
+            "field_group": "file_deleted"
+        }
+    },
+    {
+        "model": "xapi.slackobjectfield",
+        "pk": 38,
+        "fields": {
+            "xapi_object": 4,
+            "field_group": "file_created"
+        }
+    },
+    {
+        "model": "xapi.slackobjectfield",
+        "pk": 39,
+        "fields": {
+            "xapi_object": 4,
+            "field_group": "file_public"
+        }
+    },
+    {
+        "model": "xapi.slackobjectfield",
+        "pk": 40,
+        "fields": {
+            "xapi_object": 4,
+            "field_group": "file_shared"
+        }
+    },
+    {
+        "model": "xapi.slackobjectfield",
+        "pk": 64,
+        "fields": {
+            "xapi_object": 6,
+            "field_group": "user_change"
+        }
+    },
+    {
+        "model": "xapi.slackobjectfield",
+        "pk": 65,
+        "fields": {
+            "xapi_object": 5,
+            "field_group": "dnd_updated_user"
+        }
+    },
+    {
+        "model": "xapi.slackobjectfield",
+        "pk": 73,
+        "fields": {
+            "xapi_object": 3,
+            "field_group": "set_topic"
+        }
+    },
+    {
+        "model": "xapi.slackobjectfield",
+        "pk": 74,
+        "fields": {
+            "xapi_object": 3,
+            "field_group": "set_topic"
+        }
+    },
+    {
+        "model": "xapi.slackobjectfield",
+        "pk": 75,
+        "fields": {
+            "xapi_object": 3,
+            "field_group": "set_description"
+        }
+    },
+    {
+        "model": "xapi.slackobjectfield",
+        "pk": 76,
+        "fields": {
+            "xapi_object": 3,
+            "field_group": "set_description"
+        }
+    },
+    {
+        "model": "xapi.slackobjectfield",
+        "pk": 77,
+        "fields": {
+            "xapi_object": 3,
+            "field_group": "channel_archive"
+        }
+    },
+    {
+        "model": "xapi.slackobjectfield",
+        "pk": 78,
+        "fields": {
+            "xapi_object": 3,
+            "field_group": "channel_archive"
+        }
+    },
+    {
+        "model": "xapi.slackverbfield",
+        "pk": 1,
+        "fields": {
+            "xapi_verb": 1,
+            "field_group": "sent_message"
+        }
+    },
+    {
+        "model": "xapi.slackverbfield",
+        "pk": 2,
+        "fields": {
+            "xapi_verb": 1,
+            "field_group": "sent_message"
+        }
+    },
+    {
+        "model": "xapi.slackverbfield",
+        "pk": 41,
+        "fields": {
+            "xapi_verb": 9,
+            "field_group": "reacted_to"
+        }
+    },
+    {
+        "model": "xapi.slackverbfield",
+        "pk": 43,
+        "fields": {
+            "xapi_verb": 9,
+            "field_group": "reacted_to"
+        }
+    },
+    {
+        "model": "xapi.slackverbfield",
+        "pk": 44,
+        "fields": {
+            "xapi_verb": 10,
+            "field_group": "reaction_removed"
+        }
+    },
+    {
+        "model": "xapi.slackverbfield",
+        "pk": 45,
+        "fields": {
+            "xapi_verb": 10,
+            "field_group": "reaction_removed"
+        }
+    },
+    {
+        "model": "xapi.slackverbfield",
+        "pk": 46,
+        "fields": {
+            "xapi_verb": 2,
+            "field_group": "joined"
+        }
+    },
+    {
+        "model": "xapi.slackverbfield",
+        "pk": 47,
+        "fields": {
+            "xapi_verb": 3,
+            "field_group": "left"
+        }
+    },
+    {
+        "model": "xapi.slackverbfield",
+        "pk": 48,
+        "fields": {
+            "xapi_verb": 4,
+            "field_group": "message_changed"
+        }
+    },
+    {
+        "model": "xapi.slackverbfield",
+        "pk": 49,
+        "fields": {
+            "xapi_verb": 4,
+            "field_group": "message_changed"
+        }
+    },
+    {
+        "model": "xapi.slackverbfield",
+        "pk": 50,
+        "fields": {
+            "xapi_verb": 5,
+            "field_group": "message_deleted"
+        }
+    },
+    {
+        "model": "xapi.slackverbfield",
+        "pk": 51,
+        "fields": {
+            "xapi_verb": 5,
+            "field_group": "message_deleted"
+        }
+    },
+    {
+        "model": "xapi.slackverbfield",
+        "pk": 52,
+        "fields": {
+            "xapi_verb": 6,
+            "field_group": "message_shared_file"
+        }
+    },
+    {
+        "model": "xapi.slackverbfield",
+        "pk": 53,
+        "fields": {
+            "xapi_verb": 6,
+            "field_group": "message_shared_file"
+        }
+    },
+    {
+        "model": "xapi.slackverbfield",
+        "pk": 54,
+        "fields": {
+            "xapi_verb": 7,
+            "field_group": "pin_added"
+        }
+    },
+    {
+        "model": "xapi.slackverbfield",
+        "pk": 55,
+        "fields": {
+            "xapi_verb": 8,
+            "field_group": "pin_removed"
+        }
+    },
+    {
+        "model": "xapi.slackverbfield",
+        "pk": 56,
+        "fields": {
+            "xapi_verb": 11,
+            "field_group": "star_added"
+        }
+    },
+    {
+        "model": "xapi.slackverbfield",
+        "pk": 57,
+        "fields": {
+            "xapi_verb": 12,
+            "field_group": "star_removed"
+        }
+    },
+    {
+        "model": "xapi.slackverbfield",
+        "pk": 58,
+        "fields": {
+            "xapi_verb": 4,
+            "field_group": "file_change"
+        }
+    },
+    {
+        "model": "xapi.slackverbfield",
+        "pk": 59,
+        "fields": {
+            "xapi_verb": 5,
+            "field_group": "file_deleted"
+        }
+    },
+    {
+        "model": "xapi.slackverbfield",
+        "pk": 60,
+        "fields": {
+            "xapi_verb": 13,
+            "field_group": "file_created"
+        }
+    },
+    {
+        "model": "xapi.slackverbfield",
+        "pk": 61,
+        "fields": {
+            "xapi_verb": 14,
+            "field_group": "file_public"
+        }
+    },
+    {
+        "model": "xapi.slackverbfield",
+        "pk": 62,
+        "fields": {
+            "xapi_verb": 6,
+            "field_group": "file_shared"
+        }
+    },
+    {
+        "model": "xapi.slackverbfield",
+        "pk": 63,
+        "fields": {
+            "xapi_verb": 4,
+            "field_group": "dnd_updated_user"
+        }
+    },
+    {
+        "model": "xapi.slackverbfield",
+        "pk": 66,
+        "fields": {
+            "xapi_verb": 4,
+            "field_group": "user_change"
+        }
+    },
+    {
+        "model": "xapi.slackverbfield",
+        "pk": 67,
+        "fields": {
+            "xapi_verb": 15,
+            "field_group": "set_topic"
+        }
+    },
+    {
+        "model": "xapi.slackverbfield",
+        "pk": 68,
+        "fields": {
+            "xapi_verb": 15,
+            "field_group": "set_topic"
+        }
+    },
+    {
+        "model": "xapi.slackverbfield",
+        "pk": 69,
+        "fields": {
+            "xapi_verb": 16,
+            "field_group": "set_description"
+        }
+    },
+    {
+        "model": "xapi.slackverbfield",
+        "pk": 70,
+        "fields": {
+            "xapi_verb": 16,
+            "field_group": "set_description"
+        }
+    },
+    {
+        "model": "xapi.slackverbfield",
+        "pk": 71,
+        "fields": {
+            "xapi_verb": 17,
+            "field_group": "channel_archive"
+        }
+    },
+    {
+        "model": "xapi.slackverbfield",
+        "pk": 72,
+        "fields": {
+            "xapi_verb": 17,
+            "field_group": "channel_archive"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 1,
+        "fields": {
+            "created_at": "2020-10-01T21:54:14.748Z",
+            "updated_at": "2020-10-04T17:59:39.660Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "event_type",
+            "expected_value": "message"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 2,
+        "fields": {
+            "created_at": "2020-10-01T21:54:25.201Z",
+            "updated_at": "2020-10-04T17:59:34.955Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "event_subtype",
+            "expected_value": "None"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 3,
+        "fields": {
+            "created_at": "2020-10-01T21:54:43.277Z",
+            "updated_at": "2020-10-04T22:10:34.948Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "event_type",
+            "expected_value": "message"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 4,
+        "fields": {
+            "created_at": "2020-10-04T13:45:44.919Z",
+            "updated_at": "2020-10-04T22:10:27.125Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "event_subtype",
+            "expected_value": "None"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 5,
+        "fields": {
+            "created_at": "2020-10-04T13:49:13.741Z",
+            "updated_at": "2020-10-04T23:36:44.981Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "event_type",
+            "expected_value": "reaction_added"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 6,
+        "fields": {
+            "created_at": "2020-10-04T13:49:40.532Z",
+            "updated_at": "2020-10-04T23:36:36.374Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "event_subtype",
+            "expected_value": "message"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 7,
+        "fields": {
+            "created_at": "2020-10-04T13:50:06.479Z",
+            "updated_at": "2020-10-04T23:36:23.240Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "event_type",
+            "expected_value": "reaction_removed"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 8,
+        "fields": {
+            "created_at": "2020-10-04T13:50:16.316Z",
+            "updated_at": "2020-10-04T23:36:12.933Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "event_subtype",
+            "expected_value": "message"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 9,
+        "fields": {
+            "created_at": "2020-10-04T13:53:38.333Z",
+            "updated_at": "2020-10-04T17:58:57.611Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "event_type",
+            "expected_value": "member_joined_channel"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 10,
+        "fields": {
+            "created_at": "2020-10-04T13:53:49.376Z",
+            "updated_at": "2020-10-04T17:59:02.850Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "event_subtype",
+            "expected_value": "None"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 11,
+        "fields": {
+            "created_at": "2020-10-04T13:54:10.695Z",
+            "updated_at": "2020-10-04T17:59:18.509Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "event_type",
+            "expected_value": "member_left_channel"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 12,
+        "fields": {
+            "created_at": "2020-10-04T13:54:21.638Z",
+            "updated_at": "2020-10-04T17:59:12.550Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "event_subtype",
+            "expected_value": "None"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 13,
+        "fields": {
+            "created_at": "2020-10-04T13:58:02.066Z",
+            "updated_at": "2020-10-04T22:10:02.478Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "event_type",
+            "expected_value": "message"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 14,
+        "fields": {
+            "created_at": "2020-10-04T17:39:30.764Z",
+            "updated_at": "2020-10-04T22:09:53.904Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "event_subtype",
+            "expected_value": "message_changed"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 15,
+        "fields": {
+            "created_at": "2020-10-04T22:09:07.361Z",
+            "updated_at": "2020-10-04T22:09:43.944Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "event_type",
+            "expected_value": "message"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 16,
+        "fields": {
+            "created_at": "2020-10-04T22:09:34.633Z",
+            "updated_at": "2020-10-04T22:09:34.633Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "event_subtype",
+            "expected_value": "message_deleted"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 17,
+        "fields": {
+            "created_at": "2020-10-04T22:14:11.718Z",
+            "updated_at": "2020-10-04T22:15:34.113Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "event_type",
+            "expected_value": "message"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 18,
+        "fields": {
+            "created_at": "2020-10-04T22:15:05.788Z",
+            "updated_at": "2020-10-04T22:15:29.382Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "event_subtype",
+            "expected_value": "file_share"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 19,
+        "fields": {
+            "created_at": "2020-10-04T22:50:34.291Z",
+            "updated_at": "2020-10-04T22:50:34.291Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "event_type",
+            "expected_value": "message"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 20,
+        "fields": {
+            "created_at": "2020-10-04T22:52:50.959Z",
+            "updated_at": "2020-10-04T22:52:50.959Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "has_files",
+            "expected_value": "True"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 21,
+        "fields": {
+            "created_at": "2020-10-04T23:03:59.669Z",
+            "updated_at": "2020-10-04T23:03:59.669Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "event_type",
+            "expected_value": "pin_added"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 22,
+        "fields": {
+            "created_at": "2020-10-04T23:04:18.383Z",
+            "updated_at": "2020-10-04T23:04:18.383Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "has_files",
+            "expected_value": "False"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 23,
+        "fields": {
+            "created_at": "2020-10-04T23:04:34.675Z",
+            "updated_at": "2020-10-04T23:04:34.675Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "event_type",
+            "expected_value": "pin_added"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 24,
+        "fields": {
+            "created_at": "2020-10-04T23:04:50.021Z",
+            "updated_at": "2020-10-04T23:04:50.021Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "has_files",
+            "expected_value": "True"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 25,
+        "fields": {
+            "created_at": "2020-10-04T23:05:08.120Z",
+            "updated_at": "2020-10-04T23:05:33.623Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "event_type",
+            "expected_value": "pin_removed"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 26,
+        "fields": {
+            "created_at": "2020-10-04T23:05:26.683Z",
+            "updated_at": "2020-10-04T23:05:26.683Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "has_files",
+            "expected_value": "False"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 27,
+        "fields": {
+            "created_at": "2020-10-04T23:05:57.252Z",
+            "updated_at": "2020-10-04T23:05:57.252Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "event_type",
+            "expected_value": "pin_removed"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 28,
+        "fields": {
+            "created_at": "2020-10-04T23:06:19.070Z",
+            "updated_at": "2020-10-04T23:06:19.070Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "has_files",
+            "expected_value": "True"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 29,
+        "fields": {
+            "created_at": "2020-10-04T23:07:29.672Z",
+            "updated_at": "2020-10-04T23:07:29.672Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "event_type",
+            "expected_value": "star_added"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 30,
+        "fields": {
+            "created_at": "2020-10-04T23:08:00.599Z",
+            "updated_at": "2020-10-06T21:21:35.728Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "has_files",
+            "expected_value": "False"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 31,
+        "fields": {
+            "created_at": "2020-10-04T23:08:25.971Z",
+            "updated_at": "2020-10-04T23:08:25.971Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "event_type",
+            "expected_value": "star_added"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 32,
+        "fields": {
+            "created_at": "2020-10-04T23:08:40.636Z",
+            "updated_at": "2020-10-04T23:08:40.636Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "has_files",
+            "expected_value": "True"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 33,
+        "fields": {
+            "created_at": "2020-10-04T23:08:59.536Z",
+            "updated_at": "2020-10-04T23:08:59.536Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "event_type",
+            "expected_value": "star_removed"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 34,
+        "fields": {
+            "created_at": "2020-10-04T23:09:13.299Z",
+            "updated_at": "2020-10-04T23:09:13.299Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "has_files",
+            "expected_value": "False"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 35,
+        "fields": {
+            "created_at": "2020-10-04T23:09:31.506Z",
+            "updated_at": "2020-10-04T23:09:31.506Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "event_type",
+            "expected_value": "star_removed"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 36,
+        "fields": {
+            "created_at": "2020-10-04T23:14:25.163Z",
+            "updated_at": "2020-10-04T23:14:25.163Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "event_type",
+            "expected_value": "file_change"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 37,
+        "fields": {
+            "created_at": "2020-10-04T23:14:48.757Z",
+            "updated_at": "2020-10-04T23:14:48.757Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "event_type",
+            "expected_value": "file_deleted"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 38,
+        "fields": {
+            "created_at": "2020-10-04T23:15:10.797Z",
+            "updated_at": "2020-10-04T23:15:10.797Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "event_type",
+            "expected_value": "file_created"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 39,
+        "fields": {
+            "created_at": "2020-10-04T23:15:32.780Z",
+            "updated_at": "2020-10-04T23:15:32.780Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "event_type",
+            "expected_value": "file_public"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 40,
+        "fields": {
+            "created_at": "2020-10-04T23:15:47.293Z",
+            "updated_at": "2020-10-04T23:15:47.293Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "event_type",
+            "expected_value": "file_shared"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 41,
+        "fields": {
+            "created_at": "2020-10-04T23:27:58.802Z",
+            "updated_at": "2020-10-04T23:27:58.802Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "event_type",
+            "expected_value": "reaction_added"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 43,
+        "fields": {
+            "created_at": "2020-10-04T23:35:26.289Z",
+            "updated_at": "2020-10-04T23:35:26.289Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "event_subtype",
+            "expected_value": "message"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 44,
+        "fields": {
+            "created_at": "2020-10-04T23:38:25.268Z",
+            "updated_at": "2020-10-04T23:38:25.268Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "event_type",
+            "expected_value": "reaction_removed"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 45,
+        "fields": {
+            "created_at": "2020-10-04T23:38:40.412Z",
+            "updated_at": "2020-10-04T23:38:40.412Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "event_subtype",
+            "expected_value": "message"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 46,
+        "fields": {
+            "created_at": "2020-10-04T23:40:18.211Z",
+            "updated_at": "2020-10-04T23:40:20.679Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "event_type",
+            "expected_value": "member_joined_channel"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 47,
+        "fields": {
+            "created_at": "2020-10-04T23:40:33.767Z",
+            "updated_at": "2020-10-04T23:40:33.767Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "event_type",
+            "expected_value": "member_left_channel"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 48,
+        "fields": {
+            "created_at": "2020-10-04T23:40:57.404Z",
+            "updated_at": "2020-10-06T22:15:11.438Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "event_type",
+            "expected_value": "message"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 49,
+        "fields": {
+            "created_at": "2020-10-04T23:41:12.424Z",
+            "updated_at": "2020-10-04T23:41:12.424Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "event_subtype",
+            "expected_value": "message_changed"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 50,
+        "fields": {
+            "created_at": "2020-10-04T23:41:37.217Z",
+            "updated_at": "2020-10-04T23:41:37.217Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "event_type",
+            "expected_value": "message"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 51,
+        "fields": {
+            "created_at": "2020-10-04T23:41:48.570Z",
+            "updated_at": "2020-10-04T23:41:48.570Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "event_subtype",
+            "expected_value": "message_deleted"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 52,
+        "fields": {
+            "created_at": "2020-10-04T23:42:05.721Z",
+            "updated_at": "2020-10-04T23:43:09.696Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "event_type",
+            "expected_value": "message"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 53,
+        "fields": {
+            "created_at": "2020-10-04T23:42:56.095Z",
+            "updated_at": "2020-10-04T23:43:14.337Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "event_subtype",
+            "expected_value": "file_share"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 54,
+        "fields": {
+            "created_at": "2020-10-04T23:43:29.141Z",
+            "updated_at": "2020-10-04T23:43:29.141Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "event_type",
+            "expected_value": "pin_added"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 55,
+        "fields": {
+            "created_at": "2020-10-04T23:43:42.244Z",
+            "updated_at": "2020-10-04T23:43:42.244Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "event_type",
+            "expected_value": "pin_removed"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 56,
+        "fields": {
+            "created_at": "2020-10-04T23:43:58.061Z",
+            "updated_at": "2020-10-04T23:43:58.061Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "event_type",
+            "expected_value": "star_added"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 57,
+        "fields": {
+            "created_at": "2020-10-04T23:44:07.928Z",
+            "updated_at": "2020-10-04T23:44:07.928Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "event_type",
+            "expected_value": "star_removed"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 58,
+        "fields": {
+            "created_at": "2020-10-04T23:44:22.400Z",
+            "updated_at": "2020-10-04T23:44:22.400Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "event_type",
+            "expected_value": "file_change"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 59,
+        "fields": {
+            "created_at": "2020-10-04T23:44:34.836Z",
+            "updated_at": "2020-10-04T23:44:34.836Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "event_type",
+            "expected_value": "file_deleted"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 60,
+        "fields": {
+            "created_at": "2020-10-04T23:44:52.638Z",
+            "updated_at": "2020-10-04T23:44:52.638Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "event_type",
+            "expected_value": "file_created"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 61,
+        "fields": {
+            "created_at": "2020-10-04T23:45:03.666Z",
+            "updated_at": "2020-10-04T23:45:03.666Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "event_type",
+            "expected_value": "file_public"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 62,
+        "fields": {
+            "created_at": "2020-10-04T23:45:16.944Z",
+            "updated_at": "2020-10-04T23:45:16.944Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "event_type",
+            "expected_value": "file_shared"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 63,
+        "fields": {
+            "created_at": "2020-10-07T22:43:37.359Z",
+            "updated_at": "2020-10-07T22:43:37.359Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "event_type",
+            "expected_value": "dnd_updated_user"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 64,
+        "fields": {
+            "created_at": "2020-10-07T22:48:12.646Z",
+            "updated_at": "2020-10-07T22:48:12.646Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "event_type",
+            "expected_value": "user_change"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 65,
+        "fields": {
+            "created_at": "2020-10-07T22:48:40.678Z",
+            "updated_at": "2020-10-07T22:48:40.678Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "event_type",
+            "expected_value": "dnd_updated_user"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 66,
+        "fields": {
+            "created_at": "2020-10-07T22:51:55.208Z",
+            "updated_at": "2020-10-07T22:51:55.208Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "event_type",
+            "expected_value": "user_change"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 67,
+        "fields": {
+            "created_at": "2020-10-07T23:04:01.442Z",
+            "updated_at": "2020-10-07T23:11:47.928Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "event_type",
+            "expected_value": "message"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 68,
+        "fields": {
+            "created_at": "2020-10-07T23:05:18.575Z",
+            "updated_at": "2020-10-07T23:11:42.754Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "event_subtype",
+            "expected_value": "channel_topic"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 69,
+        "fields": {
+            "created_at": "2020-10-07T23:05:34.752Z",
+            "updated_at": "2020-10-07T23:11:35.805Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "event_type",
+            "expected_value": "message"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 70,
+        "fields": {
+            "created_at": "2020-10-07T23:06:01.675Z",
+            "updated_at": "2020-10-07T23:11:30.761Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "event_subtype",
+            "expected_value": "channel_purpose"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 71,
+        "fields": {
+            "created_at": "2020-10-07T23:06:38.459Z",
+            "updated_at": "2020-10-07T23:07:03.855Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "event_type",
+            "expected_value": "message"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 72,
+        "fields": {
+            "created_at": "2020-10-07T23:06:58.345Z",
+            "updated_at": "2020-10-07T23:06:58.345Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "event_subtype",
+            "expected_value": "channel_archive"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 73,
+        "fields": {
+            "created_at": "2020-10-07T23:08:04.392Z",
+            "updated_at": "2020-10-07T23:12:05.070Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "event_type",
+            "expected_value": "message"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 74,
+        "fields": {
+            "created_at": "2020-10-07T23:08:19.040Z",
+            "updated_at": "2020-10-07T23:12:10.633Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "event_subtype",
+            "expected_value": "channel_topic"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 75,
+        "fields": {
+            "created_at": "2020-10-07T23:08:36.875Z",
+            "updated_at": "2020-10-07T23:12:29.709Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "event_type",
+            "expected_value": "message"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 76,
+        "fields": {
+            "created_at": "2020-10-07T23:08:50.265Z",
+            "updated_at": "2020-10-07T23:12:24.659Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "event_subtype",
+            "expected_value": "channel_purpose"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 77,
+        "fields": {
+            "created_at": "2020-10-07T23:09:07.042Z",
+            "updated_at": "2020-10-07T23:09:07.042Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "event_type",
+            "expected_value": "message"
+        }
+    },
+    {
+        "model": "xapi.slackfield",
+        "pk": 78,
+        "fields": {
+            "created_at": "2020-10-07T23:09:18.125Z",
+            "updated_at": "2020-10-07T23:09:18.125Z",
+            "created_by": 1,
+            "slack_field_type": "",
+            "slack_event_field": "event_subtype",
+            "expected_value": "channel_archive"
+        }
+    },
+    {
+        "model": "xapi.xapiobject",
+        "pk": 1,
+        "fields": {
+            "created_at": "2020-09-24T21:46:27.860Z",
+            "updated_at": "2020-10-01T21:56:06.629Z",
+            "created_by": 1,
+            "iri": "http://example.com/exapi/activities/slackmessage",
+            "display_name": "Slack Message",
+            "language": "en-US",
+            "description": "A message sent in Slack to an im, mpim, group or conversation (formerly channel).",
+            "activity_type": "http://id.tincanapi.com/activitytype/chat-message",
+            "more_info": null,
+            "object_type": "Activity",
+            "extensions": "[\"event_id\", \"message_text\"]",
+            "id_field": "event_id"
+        }
+    },
+    {
+        "model": "xapi.xapiobject",
+        "pk": 3,
+        "fields": {
+            "created_at": "2020-10-04T13:52:52.756Z",
+            "updated_at": "2020-10-06T23:10:25.199Z",
+            "created_by": 1,
+            "iri": "http://example.com/exapi/activities/slackconversation",
+            "display_name": "Slack Conversation",
+            "language": "en-US",
+            "description": "A conversation (formerly Channel) in Slack.",
+            "activity_type": "http://id.tincanapi.com/activitytype/chat-channel",
+            "more_info": null,
+            "object_type": "Activity",
+            "extensions": "[\"event_id\", \"channel\"]",
+            "id_field": "channel"
+        }
+    },
+    {
+        "model": "xapi.xapiobject",
+        "pk": 4,
+        "fields": {
+            "created_at": "2020-10-04T22:13:27.724Z",
+            "updated_at": "2020-10-06T23:10:16.577Z",
+            "created_by": 1,
+            "iri": "http://example.com/exapi/activities/slackfile",
+            "display_name": "Slack File",
+            "language": "en-US",
+            "description": "A file uploaded to and shared via Slack.",
+            "activity_type": "http://activitystrea.ms/schema/1.0/file",
+            "more_info": null,
+            "object_type": "Activity",
+            "extensions": "[\"event_id\", \"team_id\"]",
+            "id_field": "file_ids"
+        }
+    },
+    {
+        "model": "xapi.xapiobject",
+        "pk": 5,
+        "fields": {
+            "created_at": "2020-10-07T22:45:48.199Z",
+            "updated_at": "2020-10-07T22:45:48.199Z",
+            "created_by": 1,
+            "iri": "http://example.com/exapi/activities/slackdnd",
+            "display_name": "Sack Do Not Disturb",
+            "language": "en-US",
+            "description": "The Do Not Disturb Notification in Slack",
+            "activity_type": "http://activitystrea.ms/schema/1.0/alert",
+            "more_info": null,
+            "object_type": "Activity",
+            "extensions": "[\"event_id\", \"team_id\"]",
+            "id_field": "event_id"
+        }
+    },
+    {
+        "model": "xapi.xapiobject",
+        "pk": 6,
+        "fields": {
+            "created_at": "2020-10-07T22:47:10.098Z",
+            "updated_at": "2020-10-07T22:47:29.716Z",
+            "created_by": 1,
+            "iri": "http://example.com/exapi/activities/slackuserprofile",
+            "display_name": "Slack User Profile",
+            "language": "en-US",
+            "description": "A user's profile in Slack.",
+            "activity_type": "http://id.tincanapi.com/activitytype/user-profile",
+            "more_info": null,
+            "object_type": "Activity",
+            "extensions": "[\"event_id\", \"team_id\"]",
+            "id_field": "user_id"
+        }
+    },
+    {
+        "model": "xapi.xapiverb",
+        "pk": 1,
+        "fields": {
+            "created_at": "2020-10-01T21:53:56.289Z",
+            "updated_at": "2020-10-01T21:56:23.331Z",
+            "created_by": 1,
+            "iri": "http://example.com/verbs/sent",
+            "display_name": "sent",
+            "language": "en-US"
+        }
+    },
+    {
+        "model": "xapi.xapiverb",
+        "pk": 2,
+        "fields": {
+            "created_at": "2020-10-04T23:16:50.864Z",
+            "updated_at": "2020-10-04T23:16:50.864Z",
+            "created_by": 1,
+            "iri": "http://example.com/verbs/joined",
+            "display_name": "joined",
+            "language": "en-US"
+        }
+    },
+    {
+        "model": "xapi.xapiverb",
+        "pk": 3,
+        "fields": {
+            "created_at": "2020-10-04T23:17:11.116Z",
+            "updated_at": "2020-10-04T23:17:11.116Z",
+            "created_by": 1,
+            "iri": "http://example.com/verbs/left",
+            "display_name": "left",
+            "language": "en-US"
+        }
+    },
+    {
+        "model": "xapi.xapiverb",
+        "pk": 4,
+        "fields": {
+            "created_at": "2020-10-04T23:17:24.253Z",
+            "updated_at": "2020-10-04T23:17:24.253Z",
+            "created_by": 1,
+            "iri": "http://example.com/verbs/changed",
+            "display_name": "changed",
+            "language": "en-US"
+        }
+    },
+    {
+        "model": "xapi.xapiverb",
+        "pk": 5,
+        "fields": {
+            "created_at": "2020-10-04T23:17:37.985Z",
+            "updated_at": "2020-10-04T23:17:37.985Z",
+            "created_by": 1,
+            "iri": "http://example.com/verbs/deleted",
+            "display_name": "deleted",
+            "language": "en-US"
+        }
+    },
+    {
+        "model": "xapi.xapiverb",
+        "pk": 6,
+        "fields": {
+            "created_at": "2020-10-04T23:17:58.252Z",
+            "updated_at": "2020-10-04T23:42:30.109Z",
+            "created_by": 1,
+            "iri": "http://example.com/verbs/shared",
+            "display_name": "shared",
+            "language": "en-US"
+        }
+    },
+    {
+        "model": "xapi.xapiverb",
+        "pk": 7,
+        "fields": {
+            "created_at": "2020-10-04T23:18:18.088Z",
+            "updated_at": "2020-10-04T23:18:18.088Z",
+            "created_by": 1,
+            "iri": "http://example.com/verbs/pinned",
+            "display_name": "pinned",
+            "language": "en-US"
+        }
+    },
+    {
+        "model": "xapi.xapiverb",
+        "pk": 8,
+        "fields": {
+            "created_at": "2020-10-04T23:18:30.035Z",
+            "updated_at": "2020-10-04T23:18:30.035Z",
+            "created_by": 1,
+            "iri": "http://example.com/verbs/unpinned",
+            "display_name": "unpinned",
+            "language": "en-US"
+        }
+    },
+    {
+        "model": "xapi.xapiverb",
+        "pk": 9,
+        "fields": {
+            "created_at": "2020-10-04T23:18:53.914Z",
+            "updated_at": "2020-10-04T23:18:53.914Z",
+            "created_by": 1,
+            "iri": "http://example.com/verbs/reacted_to",
+            "display_name": "reacted to",
+            "language": "en-US"
+        }
+    },
+    {
+        "model": "xapi.xapiverb",
+        "pk": 10,
+        "fields": {
+            "created_at": "2020-10-04T23:19:13.355Z",
+            "updated_at": "2020-10-04T23:19:13.355Z",
+            "created_by": 1,
+            "iri": "http://example.com/verbs/removed_reaction_to",
+            "display_name": "removed reaction to",
+            "language": "en-US"
+        }
+    },
+    {
+        "model": "xapi.xapiverb",
+        "pk": 11,
+        "fields": {
+            "created_at": "2020-10-04T23:19:29.103Z",
+            "updated_at": "2020-10-04T23:19:29.103Z",
+            "created_by": 1,
+            "iri": "http://example.com/verbs/starred",
+            "display_name": "starred",
+            "language": "en-US"
+        }
+    },
+    {
+        "model": "xapi.xapiverb",
+        "pk": 12,
+        "fields": {
+            "created_at": "2020-10-04T23:19:40.708Z",
+            "updated_at": "2020-10-04T23:19:40.708Z",
+            "created_by": 1,
+            "iri": "http://example.com/verbs/unstarred",
+            "display_name": "unstarred",
+            "language": "en-US"
+        }
+    },
+    {
+        "model": "xapi.xapiverb",
+        "pk": 13,
+        "fields": {
+            "created_at": "2020-10-04T23:19:54.285Z",
+            "updated_at": "2020-10-04T23:19:54.285Z",
+            "created_by": 1,
+            "iri": "http://example.com/verbs/created",
+            "display_name": "created",
+            "language": "en-US"
+        }
+    },
+    {
+        "model": "xapi.xapiverb",
+        "pk": 14,
+        "fields": {
+            "created_at": "2020-10-04T23:20:25.785Z",
+            "updated_at": "2020-10-04T23:20:25.786Z",
+            "created_by": 1,
+            "iri": "http://example.com/verbs/made_public",
+            "display_name": "made public",
+            "language": "en-US"
+        }
+    },
+    {
+        "model": "xapi.xapiverb",
+        "pk": 15,
+        "fields": {
+            "created_at": "2020-10-07T23:01:17.443Z",
+            "updated_at": "2020-10-07T23:10:50.968Z",
+            "created_by": 1,
+            "iri": "http://example.com/verbs/set_topic",
+            "display_name": "set topic for",
+            "language": "en-US"
+        }
+    },
+    {
+        "model": "xapi.xapiverb",
+        "pk": 16,
+        "fields": {
+            "created_at": "2020-10-07T23:01:55.780Z",
+            "updated_at": "2020-10-07T23:11:09.988Z",
+            "created_by": 1,
+            "iri": "http://example.com/verbs/set_description",
+            "display_name": "set description for",
+            "language": "en-US"
+        }
+    },
+    {
+        "model": "xapi.xapiverb",
+        "pk": 17,
+        "fields": {
+            "created_at": "2020-10-07T23:02:59.514Z",
+            "updated_at": "2020-10-07T23:02:59.514Z",
+            "created_by": 1,
+            "iri": "http://example.com/verbs/archive",
+            "display_name": "archive",
+            "language": "en-US"
+        }
+    }
+]

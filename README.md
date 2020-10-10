@@ -12,12 +12,38 @@ Main system requirements:
 
 ## TODOs
 
-- Retrieve permalink from event channel and ts using `chat.getPermalink`
 - Add `interaction_type` to Object
 - Add `group` to Actor and Object
 - Add logic for `mentions` (e.g. add extra xapi statement for a message that mentions other users)
 - Add OAuth or JWT as authentication method (currently only BasicAuth available)
 - Add sentiment analysis to analyse messages and reactions
+
+## Development Setup
+
+1) Create a new `.env` file in the root directory ([see here]())
+2) Create the data folder (in root) and the SQLite database.
+```
+mkdir data
+touch data/db.sqlite3
+```
+3) Bring the docker containers up using `docker-compose`
+```
+docker-compose up -d
+```
+4) Run the migrations and see the xAPI fixtures
+```
+scripts/setup.sh
+```
+5) Use ngrok to create a publicly accessible URL
+``` 
+sudo apt install ngrok
+ngrok http 80
+```
+6) Access start page via localhost
+
+## For Production Setup
+
+- Make sure you serve via HTTPS
 
 ## User Stories
 

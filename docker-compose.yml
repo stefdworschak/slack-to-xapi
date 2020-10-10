@@ -4,26 +4,34 @@ services:
   webapp: &webapp
     image: slack-to-xapi
     volumes:
-      - ${PWD}/src/slack_events/:/app/slack_events/
-      - ${PWD}/src/xapi/:/app/xapi/
       - ${PWD}/data/:/app/data/
+      - ${PWD}/seed/:/app/seed/
     secrets:
       - source: dotenv
         target: /app/main/.env
-    ports:
-      - "8000:8000"
     depends_on: 
       - rabbitmq
       - celery_worker
+
   celery_worker:
     <<: *webapp
     command: celery -A main worker --loglevel=info
     ports: []
     depends_on:
       - rabbitmq
+
   rabbitmq:
     image: rabbitmq:3.8.9-alpine
-  
+
+  nginx:
+    image: nginx
+    volumes:
+      - ${PWD}/nginx/:/etc/nginx/conf.d/
+    ports:
+      - "80:80"
+    depends_on:
+      - webapp
+      - celery_worker  
 
 secrets:
   dotenv:

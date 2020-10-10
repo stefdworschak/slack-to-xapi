@@ -19,5 +19,5 @@ from slack_events.urls import urlpatterns as slack_urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include(slack_urls))
+    path('xapi/', include(slack_urls))
 ]
