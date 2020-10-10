@@ -18,11 +18,7 @@ Main system requirements:
 - Learning Locker (self-hosted open-source version)
 - ADL LRS (self-hosted open-source version)
 
-## Features:
-
-- 
-
-## TODOs
+## Todo
 
 - Add `interaction_type` to Object
 - Add `group` to Actor and Object
@@ -30,12 +26,14 @@ Main system requirements:
 - Add OAuth or JWT as authentication method (currently only BasicAuth available)
 - Add sentiment analysis to analyse messages and reactions
 
-## Preequisits
+## Prerequisits
 
 - docker & docker-compose
 - Slack Workspace (and admin access)
 
 ## Slack Connector Setup
+
+### Development Setup
 
 1) Create a new `.env` file in the root directory ([see here](https://github.com/stefdworschak/slack-to-xapi/wiki/.env))
 2) Create the data folder (in root) and the SQLite database.
@@ -62,7 +60,7 @@ ngrok http 80
 ```
 7) Access start page via localhost
 
-## For Production Setup
+### For Production Setup
 
 - Make sure you serve via HTTPS
 
@@ -86,18 +84,79 @@ ngrok http 80
 ![Oauth](https://github.com/stefdworschak/slack-to-xapi/blob/master/misc/img/oauth.png?raw=true)
 8) Copy the **OAuth Access Token** to you `.env` file
 
+## Available Configurations
 
-## User Stories
+### How to access the configurations
+
+This project does not have any custom UI. All configurations can be performed through the standard Django Admin console by accessing `/admin` on your host (e.g. for local development http://localhost/admin)
+
+### Object ID field
+
+If permalinks are not enabled, the object's id will default to the object's iri and the value of the SlackEvent's field that is specified in the object's `id_field`.
+
+If permalinks are enabled, the permalink will become the id and will default to the same as above if no permalink is found.
+
+
+For example:
+``` 
+SlackEvent.id = '123'
+
+XApiObjec.iri = 'http://example.com/message'
+
+Then the statement's object id value will be `http://example.com/Slack Message/123`.
+```
+
+For Slack Message and Slack DoNotDisturb the default is `event_id`.
+
+For Slack File the default is the first value in `file_ids`.
+
+For Slack Conversation the default is `channel`.
+
+For Slack User Profile the default is `user_id`.
+
+### Extensions
+
+If you want to add extra extensions to your xAPI statements, add the SlackEvent's field you want to include in the object's extensions field.
+
+All objects have `event_id` and `team_id` extensions by default.
+
+### Permalinks
+
+You can enable/disable the feature to retrieve permalinks for all messages, files and conversations and add them to the SlackEvent and xAPI statement by adding the `ENABLE_PERMALINKS` key to the `.env` file.
+
+If you copy the `.env` template provided in the wiki, this will default to `True`.
+
+### Actor creation
+
+You can enable/disable the feature to automatically create Actors by adding the `ACTOR_CREATION_ENABLED` key to the `.env` file.
+
+If you copy the `.env` template provided in the wiki, this will default to `True`.
+
+You will also need to set the `ACTOR_IRI_TYPE` key in the `.env` file to choose which type of actor should be created.
+
+You can choose from `mbox` which will retrieve the users's email from the Slack workspace, `mbox_sha1sum` which will retrieve the email and then hash it and `account` which will use the Slack user_id.
+
+If this is not specified it will default to `account`.
+
+You can also manually create Actors with OpenID on the Django admin console.
+
+## System Design
+
+### User Stories
 
 - As a Learning Provider, I want to measure how much students engage on Slack, so that I can validate that Slack is a useful tool to support their learning and also measure the usage of Slack.
 - As a Learning Provider, I want to know in what way my students engage with Slack, so that I can gauge which methods of interaction support their learning and enforce these methods.
 - As a Learning Provider, I want to know what kind of content students share, pin, star and react to, so that I can better curate learning resources for them.
 
-## System Architecture
+### System Architecture
 
 ![System Architecture Diagram](https://github.com/stefdworschak/slack-to-xapi/blob/master/misc/system_architecture.png?raw=true)
 
 ## Slack event to verb & object mapping
+
+### Logic
+
+![Slack Events Mapping](https://github.com/stefdworschak/slack-to-xapi/blob/master/misc/slack_events_mapping.png?raw=true)
 
 ### Standard Types:
 
@@ -109,19 +168,19 @@ ngrok http 80
 | message | message_changed | changed | Slack Message |
 | message | message_deleted | deleted | Slack Message |
 | message | file_share | shared | Slack File |
-| pin_added | None | pinned | message/Slack File |
-| pin_removed | None | unpinned | message/Slack File |
-| reaction_added | None | reacted to | message/Slack File |
-| reaction_removed | None | removed reaction to | message/Slack File |
-| star_added | None | starred | message/Slack File |
-| star_removed | None | unstarred | message/Slack File |
+| pin_added | None | pinned | Slack Message/Slack File |
+| pin_removed | None | unpinned | Slack Message/Slack File |
+| reaction_added | None | reacted to | Slack Message/Slack File |
+| reaction_removed | None | removed reaction to | Slack Message/Slack File |
+| star_added | None | starred | Slack Message/Slack File |
+| star_removed | None | unstarred | Slack Message/Slack File |
 | file_change | None | changed | Slack File |
 | file_deleted | None | deleled | Slack File |
 | file_created | None | created | Slack File |
 | file_public | None | made public | Slack File |
 | file_shared | None | shared | Slack File |
 | user_change | None | changed | Slack User Profile |
-| dnd_updated_user | None | changed | Slack Do Not Disturb |
+| dnd_updated_user | None | changed | Slack DoNotDisturb |
 | message | channel_topic | set topic for | Slack Conversation |
 | message | channel_purpose | set description for | Slack Conversation |
 | message | channel_archive | changed | Slack Conversation |
@@ -130,4 +189,4 @@ ngrok http 80
 | Slack Event Type | Slack Event SubType | Verb | Object | Extra Slack Event Attr |
 | --- | --- | --- | --- | ---| 
 | message | None | shared | Slack Message | attachments != None |
-| message | None | mentioned | actor | message contains `<@userid>` |
+| message | None | mentioned | Slack User | message contains `<@userid>` |
