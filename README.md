@@ -10,6 +10,18 @@ Main system requirements:
  - Interoperable with any xAPI conformant LRS
  - Available for any xAPI professional or enthusiast
 
+## Tested compatibility with the following LRS
+
+- SCORM Cloud (SaaS free account)
+- Watershed (SaaS free account)
+- Veracity Learning (SaaS free account)
+- Learning Locker (self-hosted open-source version)
+- ADL LRS (self-hosted open-source version)
+
+## Features:
+
+- 
+
 ## TODOs
 
 - Add `interaction_type` to Object
@@ -18,9 +30,14 @@ Main system requirements:
 - Add OAuth or JWT as authentication method (currently only BasicAuth available)
 - Add sentiment analysis to analyse messages and reactions
 
-## Development Setup
+## Preequisits
 
-1) Create a new `.env` file in the root directory ([see here]())
+- docker & docker-compose
+- Slack Workspace (and admin access)
+
+## Slack Connector Setup
+
+1) Create a new `.env` file in the root directory ([see here](https://github.com/stefdworschak/slack-to-xapi/wiki/.env))
 2) Create the data folder (in root) and the SQLite database.
 ```
 mkdir data
@@ -49,19 +66,32 @@ ngrok http 80
 
 - Make sure you serve via HTTPS
 
+## Slack App Setup
+
+1) Go to [https://api.slack.com/apps](https://api.slack.com/apps)
+2) Create new app and select your workspace from the **Development Slack Workspace**
+![Create App](https://github.com/stefdworschak/slack-to-xapi/blob/master/misc/img/create_app.png?raw=true)
+3) Open your app and go to **Event Subscriptions**
+4) Turn on **Event Subscriptions** and fill in your endpoint url (should end in "/xapi/slack/" and don't forget the "/" at the end)
+    - e.g. https://c4fcf1f12854.ngrok.io/xapi/slack/
+![Event Subscriptions Link](https://github.com/stefdworschak/slack-to-xapi/blob/master/misc/img/event_subscription_link.png?raw=true)
+    - If the link to the endpoint is not correct or does for some reason not successfully return the authentication challenge, it will show an error message
+![Event Subscriptions Link](https://github.com/stefdworschak/slack-to-xapi/blob/master/misc/img/event_subscription_link_error.png?raw=true)
+5) Add whatever events you want to save xAPI statements for (both user and/or bot)
+    - Most (if not all) of these events should already have been seeded in the previous setup steps
+![Event Subscriptions](https://github.com/stefdworschak/slack-to-xapi/blob/master/misc/img/event_subscriptions_subscriptions.png?raw=true)
+6) Add extra OAuth permissions if required
+    - If you actors to be created automatically, you will need to enable `users:read.email` as well
+7) (Re-)install your App and accept giving the app the requested permissions
+![Oauth](https://github.com/stefdworschak/slack-to-xapi/blob/master/misc/img/oauth.png?raw=true)
+8) Copy the **OAuth Access Token** to you `.env` file
+
+
 ## User Stories
 
 - As a Learning Provider, I want to measure how much students engage on Slack, so that I can validate that Slack is a useful tool to support their learning and also measure the usage of Slack.
 - As a Learning Provider, I want to know in what way my students engage with Slack, so that I can gauge which methods of interaction support their learning and enforce these methods.
 - As a Learning Provider, I want to know what kind of content students share, pin, star and react to, so that I can better curate learning resources for them.
-
-## Tested compatibility with the following LRS
-
-- SCORM Cloud (SaaS free account)
-- Watershed (SaaS free account)
-- Veracity Learning (SaaS free account)
-- Learning Locker (self-hosted open-source version)
-- ADL LRS (self-hosted open-source version)
 
 ## System Architecture
 
@@ -73,26 +103,31 @@ ngrok http 80
 
 | Slack Event Type | Slack Event SubType | Verb | Object | 
 | --- | --- | --- | --- |
-| member_joined_channel | None | joined | channel uri |
-| member_left_channel | None | left | channel uri |
-| message | None | sent | message uri |
-| message | message_changed | changed | message uri |
-| message | message_deleted | deleted | message uri |
-| message | file_share | shared | file uri |
-| pin_added | None | pinned | message/file uri |
-| pin_removed | None | unpinned | message/file uri |
-| reaction_added | None | reacted to | message/file uri |
-| reaction_removed | None | removed reaction to | message/file uri |
-| star_added | None | starred | message/file uri |
-| star_removed | None | unstarred | message/file uri |
-| file_change | None | changed | file uri |
-| file_deleted | None | deleled | file uri |
-| file_created | None | created | file uri |
-| file_public | None | made public | file uri |
-| file_shared | None | shared | file uri |
+| member_joined_channel | None | joined | Slack Conversation |
+| member_left_channel | None | left | Slack Conversation |
+| message | None | sent | Slack Message |
+| message | message_changed | changed | Slack Message |
+| message | message_deleted | deleted | Slack Message |
+| message | file_share | shared | Slack File |
+| pin_added | None | pinned | message/Slack File |
+| pin_removed | None | unpinned | message/Slack File |
+| reaction_added | None | reacted to | message/Slack File |
+| reaction_removed | None | removed reaction to | message/Slack File |
+| star_added | None | starred | message/Slack File |
+| star_removed | None | unstarred | message/Slack File |
+| file_change | None | changed | Slack File |
+| file_deleted | None | deleled | Slack File |
+| file_created | None | created | Slack File |
+| file_public | None | made public | Slack File |
+| file_shared | None | shared | Slack File |
+| user_change | None | changed | Slack User Profile |
+| dnd_updated_user | None | changed | Slack Do Not Disturb |
+| message | channel_topic | set topic for | Slack Conversation |
+| message | channel_purpose | set description for | Slack Conversation |
+| message | channel_archive | changed | Slack Conversation |
 
 ### Special types: 
 | Slack Event Type | Slack Event SubType | Verb | Object | Extra Slack Event Attr |
 | --- | --- | --- | --- | ---| 
-| message | None | shared | message uri | attachments != None |
+| message | None | shared | Slack Message | attachments != None |
 | message | None | mentioned | actor | message contains `<@userid>` |

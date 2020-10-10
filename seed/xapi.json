@@ -1619,7 +1619,7 @@
             "updated_at": "2020-10-07T22:45:48.199Z",
             "created_by": 1,
             "iri": "http://example.com/exapi/activities/slackdnd",
-            "display_name": "Sack Do Not Disturb",
+            "display_name": "Slack Do Not Disturb",
             "language": "en-US",
             "description": "The Do Not Disturb Notification in Slack",
             "activity_type": "http://activitystrea.ms/schema/1.0/alert",
