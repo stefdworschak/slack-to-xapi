@@ -270,7 +270,7 @@ class XApiVerb(models.Model):
                 expected_value = None
             if (field.expected_value == 'True'
                     or field.expected_value == 'False'):
-                expected_value = bool(field.expected_value)
+                expected_value = field.expected_value == 'True'
             verb_dict[field.field_group][field.slack_event_field] = expected_value  # noqa: E501
         return verb_dict
 
