@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from jsonfield import JSONField
 
 from main.helper import get_or_none
+from main.encrypt_decrypt import encrypt, decrypt
 
 ACTOR_IRI_TYPES = [
     ('account', 'Account'),
@@ -374,3 +375,17 @@ class LrsConfig(models.Model):
 
     def __str__(self):
         return self.display_name
+
+    def save(self, *args, **kwargs):
+        """ Encrypts the password before save """
+        source = bytes(self.lrs_auth_pw, 'utf-8')
+        key = bytes(settings.SECRET_KEY, 'utf-8')
+        encrypted_password = encrypt(key, source)
+        self.lrs_auth_pw = encrypted_password
+        super(LrsConfig, self).save(*args, **kwargs)
+    
+    def get_password(self):
+        """ Decrypts the password for BasicAuth use """
+        key = bytes(settings.SECRET_KEY, 'utf-8')
+        return str(decrypt(key, self.lrs_auth_pw), 'utf-8')
+

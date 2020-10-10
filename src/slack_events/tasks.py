@@ -48,7 +48,7 @@ def send_xapi_statement_to_lrs(lrs_config, xapi_statement, slack_event):
             res = requests.post(lrs_config.lrs_endpoint,
                                 data=json.dumps(xapi_statement, default=str),
                                 auth=(lrs_config.lrs_auth_user,
-                                    lrs_config.lrs_auth_pw),
+                                      lrs_config.get_password()),
                                 headers=headers,
                                 timeout=TIMEOUT)
             if res.status_code == 200:
