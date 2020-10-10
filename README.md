@@ -24,6 +24,7 @@ Main system requirements:
 - Add `group` to Actor and Object
 - Add logic for `mentions` (e.g. add extra xapi statement for a message that mentions other users)
 - Add OAuth or JWT as authentication method (currently only BasicAuth available)
+    - For extra security the project automatically encrypts the password (using the Django `SECRET_KEY`) when saving an LRS config and only decrypts it to send an xAPI statement to the LRS
 - Add sentiment analysis to analyse messages and reactions
 
 ## Prerequisits
