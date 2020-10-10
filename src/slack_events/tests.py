@@ -1,6 +1,6 @@
 import json
 
-from django.test import TestCase
+from django.test import TestCase, override_settings
 
 from xapi.models import (XApiActor, XApiVerb, XApiObject, SlackVerbField,
                          SlackObjectField)
@@ -13,6 +13,7 @@ TEST_USER_PASSWORD = 'fakepassword'
 REAL_USER_ID = 'U01AP783ZLK'
 
 
+@override_settings(ENABLE_PERMALINKS=False)
 class SlackEventUnitTest(TestCase):
     def setUp(self):
         self.maxDiff = None
