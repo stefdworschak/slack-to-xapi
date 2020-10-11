@@ -80,8 +80,8 @@ class XApiVerbAdmin(admin.ModelAdmin):
 
 class XApiObjectAdmin(admin.ModelAdmin):
     model = XApiObject
-    list_display = ('iri', 'display_name', 'language')
-    list_filter = ('iri', 'display_name', 'language')
+    list_display = ('display_name', 'iri', 'language', 'activity_type')
+    list_filter = ('display_name', 'iri', 'language', 'activity_type')
     fieldsets = [
         (None, {'fields': [
             ('iri',), ('display_name',), ('language',), ('description',),

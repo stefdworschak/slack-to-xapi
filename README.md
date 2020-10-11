@@ -163,28 +163,34 @@ You can also manually create Actors with OpenID on the Django admin console.
 
 | Slack Event Type | Slack Event SubType | Verb | Object | 
 | --- | --- | --- | --- |
-| member_joined_channel | None | joined | Slack Conversation |
-| member_left_channel | None | left | Slack Conversation |
-| message | None | sent | Slack Message |
-| message | message_changed | changed | Slack Message |
-| message | message_deleted | deleted | Slack Message |
-| message | file_share | shared | Slack File |
-| pin_added | None | pinned | Slack Message/Slack File |
-| pin_removed | None | unpinned | Slack Message/Slack File |
-| reaction_added | None | reacted to | Slack Message/Slack File |
-| reaction_removed | None | removed reaction to | Slack Message/Slack File |
-| star_added | None | starred | Slack Message/Slack File |
-| star_removed | None | unstarred | Slack Message/Slack File |
-| file_change | None | changed | Slack File |
-| file_deleted | None | deleled | Slack File |
-| file_created | None | created | Slack File |
-| file_public | None | made public | Slack File |
-| file_shared | None | shared | Slack File |
-| user_change | None | changed | Slack User Profile |
-| dnd_updated_user | None | changed | Slack DoNotDisturb |
-| message | channel_topic | set topic for | Slack Conversation |
-| message | channel_purpose | set description for | Slack Conversation |
-| message | channel_archive | changed | Slack Conversation |
+| member_joined_channel | None | completed | Join Slack Conversation |
+| member_left_channel | None | completd | Leave Slack Conversation |
+| message | None | completed | Send Slack Message |
+| message | message_changed | completed | Change Slack Message |
+| message | message_deleted | completed | Delete Slack Message |
+| message | file_share | completed | Share Slack File(s) |
+| pin_added | None | completed | Pin Slack Message |
+| pin_added | None | completed | Pin Slack File |
+| pin_removed | None | completed | Unpin Slack Message |
+| pin_removed | None | completed | Unpin Slack File |
+| reaction_added | None | completed | React to Slack Message |
+| reaction_added | None | completed | React to Slack File |
+| reaction_removed | None | completed | Remove Reaction to Slack Message |
+| reaction_removed | None | completed | Remove Reaction to Slack File |
+| star_added | None | completed | Save Slack Message for later |
+| star_added | None | completed | Save Slack File for later |
+| star_removed | None | completed | Remove saved Slack Message |
+| star_removed | None | completed | Remove saved Slack File |
+| file_change | None | completed | Change Slack File |
+| file_deleted | None | completed | Delele Slack File |
+| file_created | None | completed | Create Slack File |
+| file_public | None | completed | Make Slack File public |
+| file_shared | None | completed | Share Slack File |
+| user_change | None | completed | Change Slack User Profile |
+| dnd_updated_user | None | completed | Change Slack DoNotDisturb |
+| message | channel_topic | completed | Set Slack Conversation topic |
+| message | channel_purpose | completed | Set Slack Conversation description |
+| message | channel_archive | completed | Archive Slack Conversation |
 
 ### Special types (currently not covered): 
 | Slack Event Type | Slack Event SubType | Verb | Object | Extra Slack Event Attr |
