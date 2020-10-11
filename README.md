@@ -71,23 +71,28 @@ ngrok http 80
 2) Create new app and select your workspace from the **Development Slack Workspace**
 
 ![Create App](https://github.com/stefdworschak/slack-to-xapi/blob/master/misc/img/create_app.png?raw=true)
+
 3) Open your app and go to **Event Subscriptions**
 4) Turn on **Event Subscriptions** and fill in your endpoint url (should end in "/xapi/slack/" and don't forget the "/" at the end)
     - e.g. https://c4fcf1f12854.ngrok.io/xapi/slack/
 
 ![Event Subscriptions Link](https://github.com/stefdworschak/slack-to-xapi/blob/master/misc/img/event_subscription_link.png?raw=true)
-    - If the link to the endpoint is not correct or does for some reason not successfully return the authentication challenge, it will show an error message
+
+- If the link to the endpoint is not correct or does for some reason not successfully return the authentication challenge, it will show an error message
 
 ![Event Subscriptions Link](https://github.com/stefdworschak/slack-to-xapi/blob/master/misc/img/event_subscription_link_error.png?raw=true)
+
 5) Add whatever events you want to save xAPI statements for (both user and/or bot)
     - Configurations for most (if not all) of these events should already have been seeded in the previous setup steps
 
 ![Event Subscriptions](https://github.com/stefdworschak/slack-to-xapi/blob/master/misc/img/event_subscriptions_subscriptions.png?raw=true)
+
 6) Add extra OAuth permissions if required
     - If you want actors to be created automatically, you will need to enable `users:read.email` as well
 7) (Re-) Install your App and accept giving the app the requested permissions
 
 ![Oauth](https://github.com/stefdworschak/slack-to-xapi/blob/master/misc/img/oauth.png?raw=true)
+
 8) Add the **OAuth Access Token** as `SLACK_OAUTH_TOKEN` to your `.env` file 
 
 ## Available Configurations
