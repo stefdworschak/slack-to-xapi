@@ -29,8 +29,12 @@ Main system requirements:
 
 ## Prerequisits
 
+- Linux/Mac OS or WSL on Windows
+    - [Install WSL on Windows](https://docs.microsoft.com/en-us/windows/wsl/install-win10)
 - docker & docker-compose
-- Slack Workspace (and admin access)
+    - [Get docker](https://docs.docker.com/get-docker/)
+    - [Install compose](https://docs.docker.com/compose/install/)
+- Slack Workspace and admin access (to create and install a Slack app)
 
 ## Slack Connector Setup
 
@@ -50,7 +54,7 @@ docker build . -t slack-to-xapi
 ```
 docker-compose up -d
 ```
-5) Run the migrations and see the xAPI fixtures
+5) Run the migrations and seed the xAPI fixtures
 ```
 scripts/setup.sh
 ```
@@ -106,9 +110,8 @@ This project does not have any custom UI. All configurations can be performed th
 If permalinks are not enabled, the object's id will default to the object's iri and the value of the SlackEvent's field that is specified in the object's `id_field`.
 
 If permalinks are enabled, the permalink will become the id and will default to the same as above if no permalink is found.
-
-
 For example:
+
 ``` 
 SlackEvent.id = '123'
 
@@ -202,8 +205,14 @@ You can also manually create Actors with OpenID on the Django admin console.
 | message | channel_purpose | completed | Set Slack Conversation description |
 | message | channel_archive | completed | Archive Slack Conversation |
 
-### Special types (currently not covered): 
+### Special types:
+
+| Slack Event Type | Slack Event SubType | Verb | Object | Extra Slack Event Attr |
+| --- | --- | --- | --- | ---|
+| message | None | shared | Slack Message | attachments != None |
+
+### Special types (currently not covered):
+
 | Slack Event Type | Slack Event SubType | Verb | Object | Extra Slack Event Attr |
 | --- | --- | --- | --- | ---| 
-| message | None | shared | Slack Message | attachments != None |
 | message | None | mentioned | Slack User | message contains `<@userid>` |
