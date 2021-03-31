@@ -16,14 +16,12 @@ def slack_xapi(request):
     """ Slack Events API interface """
     if not request.body:
         return JsonResponse({'ok': False})
-
     request_body = json.loads(request.body)
     if request_body.get('type') == 'url_verification':
         return JsonResponse({'challenge': request_body.get('challenge')})
 
     if not request_body.get('event'):
         return JsonResponse({'ok': False})
-    log.exception(request_body)
     schedule_xapi_task.delay(request_body)
     return JsonResponse({'ok': True})
 

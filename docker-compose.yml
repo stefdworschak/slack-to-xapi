@@ -22,6 +22,8 @@ services:
 
   rabbitmq:
     image: rabbitmq:3.8.9-alpine
+    ports:
+      - "5672:5672"
 
   nginx:
     image: nginx
@@ -31,7 +33,7 @@ services:
       - "80:80"
     depends_on:
       - webapp
-      - celery_worker  
+      - celery_worker
 
 secrets:
   dotenv:

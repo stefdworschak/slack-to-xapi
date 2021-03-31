@@ -90,7 +90,7 @@ DATABASES = {
     }
 }
 
-CELERY_BROKER_URL = 'amqp://guest:guest@rabbitmq:5672'
+CELERY_BROKER_URL = env('CELERY_BROKER_URL')
 
 
 # Password validation
