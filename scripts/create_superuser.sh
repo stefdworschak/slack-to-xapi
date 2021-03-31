@@ -1,0 +1,1 @@
+docker-compose exec webapp python3 manage.py createsuperuser

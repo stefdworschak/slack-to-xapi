@@ -31,6 +31,7 @@ Main system requirements:
 
 - Linux/Mac OS or WSL on Windows
     - [Install WSL on Windows](https://docs.microsoft.com/en-us/windows/wsl/install-win10)
+    - [Docker WSL setup](https://docs.docker.com/docker-for-windows/wsl/)
 - docker & docker-compose
     - [Get docker](https://docs.docker.com/get-docker/)
     - [Install compose](https://docs.docker.com/compose/install/)
@@ -58,12 +59,19 @@ docker-compose up -d
 ```
 scripts/setup.sh
 ```
-6) Use ngrok to create a publicly accessible URL
+6) Create a new superuser
+```
+scripts/create_superuser.sh
+```
+7) Check that the server is running and that the admin panel is accessible.
+    1. Open your browser
+    2. Navigate to `http://localhost/admin/`
+    3. Log in with the new user you just created
+7) Create an account with ngrok and download/install the latest version at [https://ngrok.com/](https://ngrok.com/)
+8) Use ngrok to create a publicly accessible URL
 ``` 
-sudo apt install ngrok
 ngrok http 80
 ```
-7) Access start page via localhost
 
 ### For Production Setup
 
