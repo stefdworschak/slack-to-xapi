@@ -9,19 +9,6 @@ services:
     secrets:
       - source: dotenv
         target: /app/main/.env
-    depends_on: 
-      - rabbitmq
-      - celery_worker
-
-  celery_worker:
-    <<: *webapp
-    command: celery -A main worker --loglevel=info
-    ports: []
-    depends_on:
-      - rabbitmq
-
-  rabbitmq:
-    image: rabbitmq:3.8.9-alpine
 
   nginx:
     image: nginx
@@ -31,7 +18,6 @@ services:
       - "80:80"
     depends_on:
       - webapp
-      - celery_worker  
 
 secrets:
   dotenv:
